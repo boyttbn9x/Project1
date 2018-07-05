@@ -8,7 +8,7 @@ class Rate extends Model
 {
     protected $table = 'rate';
 
-    public function user(){
+    public function users(){
     	$this -> belongsTo('App\User');
     }
 

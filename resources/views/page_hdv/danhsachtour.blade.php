@@ -43,7 +43,7 @@
                     @foreach($tour as $dst)
                         <tr class="odd gradeX" align="center">
                             <td>{{$dst->tentour}}</td>
-                            <td>{{$dst->tendiadiem}}</td>
+                            <td>{{$dst->diadiem->tendiadiem}}</td>
                             <td>{{$dst->sokhachmax}}</td>
                             <td>{{number_format($dst->giatour)}}</td>                            
                             @if(strlen($dst->hinhanh)>0)  
@@ -53,33 +53,27 @@
                             @endif
                             <td width="90px">
                                 @if(strlen($dst->hinhanh)>0)
-                                @foreach($image as $it)
-                                    @if($it->tour_id == $dst->id)
-                                        <div style="margin: 5px">
-                                            <img src="upload/{{$it->image}}" width="45" height="45">
-                                            <a href="{{route('xoa-anh',$it->id)}}" onclick=" return xoaanh()"><i class="glyphicon glyphicon-remove"></i></a>
-                                        </div>
-                                    @endif
+                                @foreach($dst->imagetour as $imgtour)
+                                    <div style="margin: 5px">
+                                        <img src="upload/{{$imgtour->image}}" width="45" height="45">
+                                        <a href="{{route('xoa-anh',$imgtour->id)}}" onclick=" return xoaanh()"><i class="glyphicon glyphicon-remove"></i></a>
+                                    </div>
                                 @endforeach
                                     <div style="margin-top: 20%"><a href="{{route('them-anh-tour',$dst->id)}}"><i class="glyphicon glyphicon-plus"></i></a></div>
                                 @endif
                             </td>
-                            <td><a href="{{route('chitiet',$dst->id)}}"> Chi tiet</a></td>
-                            <?php $flag = false ?>
-                            @if(count($bill)>0)
-                            @foreach($bill as $b)
-                                @if(($b->tour_id == $dst->id) && ($b->tinhtrangdon == 0 || $b->tinhtrangdon == 1))
-                                    <?php $flag = true ?>
+                            <td><a href="{{route('chi-tiet',$dst->id)}}"> Chi tiet</a></td>
+                            <?php $flag = true ?>
+                            @foreach($dst->bill as $dsb)
+                                @if($dsb->tinhtrangdon == 0|| $dsb->tinhtrangdon == 1)
+                                    <td></td>
+                                    <td></td>
+                                    <?php $flag = false ?>
                                     @break
                                 @endif
                             @endforeach
-                            @endif
-
                             @if($flag == true)
-                                <td></td>
-                                <td></td>
-                            @else
-                                <td class="center"><a href="hdv/tour/{{$dst->id}}/edit">
+                                <td class="center"><a href="{{route('tour.edit',$dst->id)}}">
                                     <button type="submit"><i class="glyphicon glyphicon-pencil"></i></button>
                                 </a></td>
                                 <td class="center">

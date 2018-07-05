@@ -23,7 +23,7 @@ Route::get('trang-chu',['as' => 'trang-chu', 'uses' => 'PageController@getTrangc
 
 Route::get('quy-dinh',['as' => 'quy-dinh', 'uses' => 'PageController@getQuydinh']);
 
-Route::get('chi-tiet-{idtour}',['as' => 'chitiet', 'uses' => 'PageController@getChitiet']);
+Route::get('chi-tiet/{id}', ['as' => 'chi-tiet', 'uses' => 'TourController@show']);
 
 Route::get('dia-diem-{iddd}',['as'=>'diadiem', 'uses'=>'PageController@getDiadiem']);
 
@@ -86,10 +86,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'],function(){
 	//quan ly binh luan
 	Route::get('dsbinhluan',['as'=>'dsbinhluan', 'uses'=>'AdminController@DSBinhluan']);
 	Route::get('xoabinhluan/{idbl}',['as'=>'xoabinhluan', 'uses'=>'AdminController@Xoabinhluan']);
-	Route::get('dstraloi',['as'=>'dstraloi', 'uses'=>'AdminController@DSTraloi']);
-	Route::get('xoatraloi/{idtl}',['as'=>'xoatraloi', 'uses'=>'AdminController@Xoatraloi']);
 
-	Route::resource('diadiem','DiaDiemController');
+	Route::resource('diadiem','DiaDiemController', ['except'=>['show']]);
 
 	Route::get('thongke-donhang',['as'=>'thongke-donhang', 'uses'=> 'AdminController@ThongkeDonhang']);
 	Route::get('thongke-doanhthu',['as'=>'thongke-doanhthu', 'uses'=> 'AdminController@ThongkeDoanhthu']);

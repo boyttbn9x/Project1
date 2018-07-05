@@ -1,6 +1,6 @@
 @extends('master_client')
 @section('content')
-<div class="col-md-9 col-xs-9 col-ms-9">
+<div class="col-md-9 col-xs-9 col-sm-9">
 	<div class="panel panel-default">
 		<div class="panel-heading" style="background-color:#337AB7; color:white;" >
 			<h2 style="margin-top:0px; margin-bottom:0px; text-align: center;"> Tim thay {{count($count)}} ket qua</h2>
@@ -20,12 +20,12 @@
 					</div>
 					<div class="col-md-9 col-xs-8">
 						<h4>
-							<a href="">{{$t->tentour}}</a>
+							<a>{{$t->tentour}}</a>
 						</h4>
-						Huong dan vien:<a href="{{route('tthdv',$t->users_id)}}"> {{$t->hoten}}</a>	
-						<p>Dia diem: {{$t->tendiadiem}}</p>
+						Huong dan vien:<a href="{{route('tthdv',$t->users_id)}}"> {{$t->users->hoten}}</a>	
+						<p>Dia diem: {{$t->diadiem->tendiadiem}}</p>
 						<p>Gia: {{number_format($t->giatour)}} VND</p>
-						<a class="btn btn-primary" href="chi-tiet-{{$t->id}}">Chi tiet<span class="glyphicon glyphicon-chevron-right"></span></a>
+						<a class="btn btn-primary" href="{{route('chi-tiet',$t->id)}}">Chi tiet<span class="glyphicon glyphicon-chevron-right"></span></a>
 					</div>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 			@endforeach
 
 			<div class="row" style="text-align: center">
-				{{$ketqua->appends(['search'=>$tk])->links()}}
+				{{$ketqua->links()}}
 			</div>
 
 		</div>

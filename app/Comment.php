@@ -8,11 +8,11 @@ class Comment extends Model
 {
     protected $table = 'comment';
 
-    public  function user(){
+    public function users(){
 		return $this->belongsTo('App\User');
 	}
 
 	public function tour(){
-    	$this -> belongsTo('App\Tour');
+    	return $this -> belongsTo('App\Tour');
     }
 }

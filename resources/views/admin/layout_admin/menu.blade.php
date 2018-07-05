@@ -37,9 +37,6 @@
                     <li>
                         <a href="{{route('dsbinhluan')}}">Danh sach binh luan</a>
                     </li>
-                    <li>
-                        <a href="{{route('dstraloi')}}">Danh sach tra loi binh luan</a>
-                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>

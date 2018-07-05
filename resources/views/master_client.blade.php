@@ -9,6 +9,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="dulich/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom Fonts -->
+    <link href="admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <script src="dulich/js/jquery.js"></script>
     <script src="dulich/js/bootstrap.min.js"></script>
     

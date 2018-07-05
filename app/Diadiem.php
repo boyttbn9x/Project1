@@ -12,7 +12,4 @@ class Diadiem extends Model
     	return $this->hasMany('App\Tour');
     }
 
-     public function user(){
-    	return $this->belongsTo('App\User');
-    }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;    
+use Illuminate\Http\Request; 
+use App\Http\Requests\DangKyRequest;   
 use App\User;
 use App\Tour;
 use App\Diadiem;
@@ -16,43 +17,13 @@ use Auth;
 class PageController extends Controller
 {
     public function getTrangchu(){
-        $tour=Tour::select('tour.id','users_id','hoten','tentour','giatour','hinhanh','tendiadiem')
-                ->join('users','tour.users_id','=','users.id')
-                ->join('diadiem','tour.diadiem_id','=','diadiem.id')->paginate(6);
+        $tour=Tour::paginate(6);
         return view('page_client.index',compact('tour'));
     }
 
-    public function getChitiet($idtour){
-        $cttour = Tour::select('tour.id','users_id','hoten','tentour','giatour','mota','sokhachmax','tendiadiem','hinhanh')
-                ->join('users','tour.users_id','=','users.id')
-                ->join('diadiem','tour.diadiem_id','=','diadiem.id')
-                ->where('tour.id',$idtour)->first();
-        $comment= Comment::select('comment.id','email','noidung','comment.created_at','users_id')
-                ->join('users','users.id','=','comment.users_id')
-                ->where('tour_id',$idtour)->where('parent_id',0)->paginate(6);
-        $traloi = Comment::select('email','comment.id','parent_id','comment.created_at','noidung','users_id')->join('users','users.id','=','comment.users_id')->get();
-        $image = ImageTour::where('tour_id',$idtour)->get();
-        $rate = Rate::select('rate.id','tour_id','users_id','sodiem')->where('tour_id',$idtour)->get();
-        $bill = Bill::select('users_id')->where('tour_id', $idtour)->where('tinhtrangdon',3)->get();
-
-        if(Auth::check()){
-            $iduser = Auth::user()->id;
-            $checkRate = Rate::where('tour_id',$idtour)->where('users_id',$iduser)->get();
-            $checkBill = Bill::where('tour_id',$idtour)->where('users_id',$iduser)->where('tinhtrangdon',0)->get();
-            return view('page_client.chitiet', compact('cttour','comment','traloi','bill','rate','image','checkRate','checkBill'));
-        }else{
-            return view('page_client.chitiet', compact('cttour','comment','traloi','bill','rate','image'));
-        }       
-    }
-
     public function getDiadiem($iddd){
-        $dd = Diadiem::select('tendiadiem')->where('id',$iddd)->first();
-        $idd=Tour::select('tour.id','users_id','hoten','tentour','giatour','hinhanh','tendiadiem')
-                ->join('users','tour.users_id','=','users.id')
-                ->join('diadiem','tour.diadiem_id','=','diadiem.id')
-                ->where('diadiem.id',$iddd)->paginate(6);
-
-        return view('page_client.diadiem',compact('idd','dd'));
+        $idd= Diadiem::find($iddd);     
+        return view('page_client.diadiem',compact('idd'));
     }
 
     public function postDattour($idtour, Request $request){
@@ -82,11 +53,7 @@ class PageController extends Controller
     }
 
     public function getTourOfHdv($idhdv){
-        $tour=Tour::select('tour.id','users_id','hoten','tentour','giatour','mota','tendiadiem','hinhanh')
-                ->join('users','tour.users_id','=','users.id')
-                ->join('diadiem','tour.diadiem_id','=','diadiem.id')
-                ->where('users_id',$idhdv)->paginate(6);
-
+        $tour=Tour::where('users_id',$idhdv)->paginate(6);
         return view('page_client.tour_cua_hdv', compact('tour'));
     }
 
@@ -94,27 +61,7 @@ class PageController extends Controller
         return view('page_client.quydinh');
     }
 
-    public function postDangkykhach(Request $req){
-        $req->session()->flash('message1','');
-    	$this->validate($req,
-            [
-                'hoten'=>'required',
-                'email'=> 'required|email|unique:users,email',
-                'password'=>'required|max:30|min:6',
-                'passwordAgain'=> 'same:password',
-                'sodienthoai'=>'required',
-            ],
-            [
-                'hoten.required'=>'Vui long nhap Ho ten',
-                'email.required'=>'Vui long nhap Email',
-                'email.email'=>'Dinh dang email khong dung, vui long nhap lai',
-                'email.unique'=>'Email nay da co nguoi su dung',
-                'password.required'=>'Vui long nhap password',
-                'password.max'=>'Password toi da 30 ky tu',
-                'password.min'=>'Password toi thieu 6 ky tu',
-                'passwordAgain.same'=>'Mat khau xac nhan khong hop le',
-                'sodienthoai.required'=>'Vui long nhap so dien thoai',
-            ]);
+    public function postDangkykhach(DangKyRequest $req){
         $users = new User();
         $users->hoten = $req->hoten;
         $users->email = $req->email;
@@ -133,7 +80,7 @@ class PageController extends Controller
                 'email'=> 'required|email|unique:users,email',
                 'password'=> 'required|max:30|min:6',
                 'passwordAgain'=> 'same:password',
-                'sodienthoai'=> 'required',
+                'sodienthoai'=> 'required|integer',
                 'diachi'=> 'required',
             ],
             [
@@ -146,6 +93,7 @@ class PageController extends Controller
                 'password.max'=> 'Mat khau toi da 30 ky ty',
                 'passwordAgain.same'=> 'Mat khau xac nhan khong hop le',
                 'sodienthoai.required'=> 'Vui long nhap so dien thoai',
+                'sodienthoai.integer'=> 'So dien thoai la 1 day so',
                 'diachi.required'=> 'Vui long nhap dia chi',
             ]);
         $users = new User();
@@ -179,9 +127,9 @@ class PageController extends Controller
         if(Auth::attempt($check_admin))
             return redirect()->route('trang-chu-admin');
         else if(Auth::attempt($check_user))
-            return redirect()->route('trang-chu');
+            return redirect()->back();
         else
-            return redirect()->back()->with('message','Sai tài khoản hoặc mật khẩu!');
+            return redirect()->back()->with('loiDangNhap','Sai tài khoản hoặc mật khẩu!');
     }
 
     public function getDangxuat(){
@@ -222,12 +170,12 @@ class PageController extends Controller
        $this -> validate($request,
             [
                 'hoten'=>'required',
-                'sodienthoai'=>'required|numeric',
+                'sodienthoai'=>'required|integer',
             ],
             [
                 'hoten.required'=>'Vui long nhap ho ten',
                 'sodienthoai.required'=>'Vui long nhap so dien thoai',
-                'sodienthoai.numeric'=>'So dien thoai la 1 day so',
+                'sodienthoai.integer'=>'So dien thoai la 1 day so',
             ]);     
         $user = Auth::user();
         $user->hoten = $request->hoten;
@@ -251,11 +199,10 @@ class PageController extends Controller
             $file = $request->file('anhdaidien');
             $duoi = $file->getClientOriginalExtension();
             if($duoi != 'jpg' && $duoi != "png" && $duoi != "jpeg"){
-                return redirect()->back()->with('loi','Định dạng ảnh phải là jpg, png, jpeg');
+                return redirect()->back()->with('loianh','Định dạng ảnh phải là jpg, png, jpeg');
             }
 
             $name = $file->getClientOriginalName();
-            echo $name;
             $anhdaidien= str_random(4)."_".$name;
             while(file_exists("upload".$anhdaidien)){
                 $anhdaidien= str_random(4)."_".$name;
@@ -267,11 +214,16 @@ class PageController extends Controller
 
         $user->sodienthoai=$request->sodienthoai;
         $user->diachi = $request->diachi;
-        $user->namsinh = $request->namsinh;
+        if ($request->namsinh != "") {
+            $y = date('Y');
+            if ($y - $request->namsinh  <= 100 && $y - $request->namsinh  >= 3) {
+                $user->namsinh = $request->namsinh;
+            }else return redirect()->back()->with('loinamsinh','Vui long nhap dung nam sinh');
+        }
         if($request->gioitinh != "")
             $user->gioitinh = $request->gioitinh;
         $user->save();
-        return redirect()->route('thong-tin-ca-nhan')->with('thanhcong','Sua thong tin thanh cong');
+        return redirect()->back()->with('suathanhcong','Sua thong tin thanh cong');
     }
 
     public function getTimkiem(Request $request){
@@ -283,31 +235,20 @@ class PageController extends Controller
                 'timkiem.required'=> 'Vui long nhap thong tin can tim kiem'
             ]);
         $tk = $request->timkiem;
-        $ketqua = Tour::select('tour.id','tentour','hinhanh','giatour','hoten','tendiadiem','users_id')->where('tentour','like','%'.$tk.'%')
-                ->orwhere('giatour',$tk)
-                ->join('diadiem','tour.diadiem_id','=','diadiem.id')
-                ->join('users','tour.users_id','=','users.id')
-                ->orwhere('tendiadiem','like','%'.$tk.'%')
-                ->paginate(6);
+        $ketqua = Tour::where('tentour','like','%'.$tk.'%')
+                ->orwhere('giatour',$tk)->paginate(6);
         $count  = Tour::where('tentour','like','%'.$tk.'%')
-                ->orwhere('giatour',$tk)
-                ->join('diadiem','tour.diadiem_id','=','diadiem.id')
-                ->orwhere('tendiadiem','like','%'.$tk.'%')
-                ->get();
-        return view('page_client.timkiem',compact('ketqua','count','tk'));
+                ->orwhere('giatour',$tk)->get();
+        return view('page_client.timkiem',compact('ketqua','count'));
     }
 
     public function getLichsu(){
-        $iduser = Auth::user()->id;
-        $lichsu = Bill::select('tour_id','sokhachdangky','tongtien','tinhtrangdon','tentour','tour.users_id','hinhanh','bill.id','email')
-            ->where('bill.users_id',$iduser)
-            ->join('tour','tour.id','=','bill.tour_id')
-            ->join('users','tour.users_id','=','users.id')->paginate(6);
+        $lichsu = Bill::where('users_id',Auth::user()->id)->paginate(6);
         return view('page_client.lichsudattour', compact('lichsu'));
     }
 
     public function getTraloi($idbl){
-        $bl = Comment::select('id','noidung')->where('id',$idbl)->first();
+        $bl = Comment::find($idbl);
         return view('page_client.traloibinhluan',compact('bl'));
     }
 
@@ -328,13 +269,14 @@ class PageController extends Controller
         $traloi->tour_id = $idtour;
         $traloi->noidung = $request->traloi;
         $traloi->save();
-        return redirect()->route('chitiet',$idtour);
+        return redirect()->route('chi-tiet',$idtour);
     }
 
     public function Danhgia($idtour, Request $request){
         $iduser = Auth::user()->id;
         if($request->sodiem == 0) return redirect()->back()->with('errorRate','Loi danh gia!');
-        else{
+        else
+        {
             $rate = new Rate();
             $rate->tour_id = $idtour;
             $rate->users_id = $iduser;
@@ -343,6 +285,5 @@ class PageController extends Controller
             return redirect()->back()->with('successRate','Cam on ban da danh gia tour.');
         }
     }
-
 
 }

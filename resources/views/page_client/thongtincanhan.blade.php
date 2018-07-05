@@ -1,14 +1,8 @@
 @extends('master_client')
 @section('content')
 
-<div class="col-md-9 col-xs-9 col-ms-9">
+<div class="col-md-9 col-xs-9 col-sm-9">
 	<div class="panel panel-default">
-		@if(Session::has('thanhcong'))
-            <div class="alert alert-success">
-                {{Session::get('thanhcong')}}
-            </div>
-        @endif
-
         @if(isset($user))
 		<div class="panel-heading" style="background-color:#337AB7; color:white;" >
 			<h2 style="margin-top:0px; margin-bottom:0px; text-align: center;"> Thong tin Ca nhan</h2>
@@ -17,10 +11,9 @@
 		<div class="panel-body">
 			<div class="row-item row">
 				<div class="col-md-12 border-right">
-					<div class="col-md-9">
-						<h3>
-							Ho ten: <a>{{$user->hoten}}</a>
-						</h3>
+					<div class="col-md-9 col-sm-9 col-xs-9">
+						<h3>Ho ten: <a>{{$user->hoten}}</a></h3>
+
 						<p>Email: {{$user->email}}<p>
 						@if($user->namsinh != "")
 						<p>Nam sinh: {{$user->namsinh}}</p>
@@ -52,7 +45,9 @@
 
 			            <!-- Modal body -->
 			            <div class="modal-body">
-
+			            	@if(Session::has('suathanhcong'))
+					            <div class="alert alert-success text-center">{{Session::get('suathanhcong')}}</div>
+					        @endif
 			                <form action="{{route('sua-thong-tin')}}" method="post" enctype="multipart/form-data">
 				                <input type="hidden" name="_token" value="{{csrf_token()}}">
 
@@ -74,6 +69,9 @@
 				                <br>
 
 				                <label>Anh dai dien</label>
+				                @if(Session::has('loianh')) 
+				                	<span style="color: red; margin-left: 20px">{{Session::get('loianh')}}</span>
+				                @endif
 				                <input type="file" class="form-control" name="anhdaidien" value="{{$user->anhdaidien}}">
 				                <br>
 
@@ -87,6 +85,9 @@
 				                <br>
 
 				                <label>Nam sinh</label>
+				                @if(Session::has('loinamsinh')) 
+				                	<span style="color: red; margin-left: 20px">{{Session::get('loinamsinh')}}</span>
+				                @endif
 				                <input type="text" class="form-control" name="namsinh" value="{{$user->namsinh}}">
 				                <br>
 
@@ -111,7 +112,7 @@
 			        </div>
 			    </div>
 			</div>
-			@if(count($errors)>0)
+			@if(count($errors)>0 || Session::has('suathanhcong') || Session::has('loianh') || Session::has('loinamsinh'))
 			<script type="text/javascript">
 				$(document).ready(function(){
 					$("#SuaThongTin").modal();
@@ -128,7 +129,7 @@
 					@foreach($cthdv as $ct)
 					<div class="row-item row">
 						<div class="col-md-12 border-right">
-							<div class="col-md-9">
+							<div class="col-md-9 col-sm-9 col-xs-9">
 								<h3>
 									Ho ten: <a>{{$ct->hoten}}</a>
 								</h3>

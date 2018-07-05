@@ -21,11 +21,11 @@
 					</div>
 					<div class="col-md-9 col-xs-8">
 						<h4><a>{{$t->tentour}}</a></h4>
-						<p>Huong dan vien:<a> {{$t->hoten}}</a></p>
-						<p>Dia diem: {{$t->tendiadiem}}<br>
+						<p>Huong dan vien:<a> {{$t->users->hoten}}</a></p>
+						<p>Dia diem: {{$t->diadiem->tendiadiem}}<br>
 							
 						<p>Gia tour: {{number_format($t->giatour)}} VND</p>
-						<a class="btn btn-primary" href="{{route('chitiet',$t->id)}}">Chi tiet<span class="glyphicon glyphicon-chevron-right"></span></a>
+						<a class="btn btn-primary" href="{{route('chi-tiet',$t->id)}}">Chi tiet<span class="glyphicon glyphicon-chevron-right"></span></a>
 					</div>
 				</div>
 			</div>
