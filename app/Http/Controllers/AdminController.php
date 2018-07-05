@@ -16,12 +16,12 @@ class AdminController extends Controller
     }
 
     public function getDSkhach(){
-    	$dskhach = User::select('id','hoten','email','gioitinh','sodienthoai','diachi','namsinh')->where('quyen',1)->get();
+    	$dskhach = User::where('quyen',1)->get();
     	return view('admin.page_admin.danhsachnguoidung', compact('dskhach'));
     }
 
     public function getDShdv(){
-    	$dshdv = User::select('id','hoten','email','sodienthoai','diachi','status')->where('quyen',2)->get();
+    	$dshdv = User::where('quyen',2)->get();
     	return view('admin.page_admin.danhsachnguoidung', compact('dshdv'));
     }
 
@@ -43,45 +43,23 @@ class AdminController extends Controller
     }
 
     public function DSBinhluan(){
-        $comment = Comment::select('comment.id','email','tentour','noidung','tour_id')
-        ->join('users','users.id','=','comment.users_id')
-        ->join('tour','tour.id','=','comment.tour_id')
-        ->get();
+        $comment = Comment::all();
         return view('admin.page_admin.dsbinhluan', compact('comment'));
-    }
-
-    public function DSTraloi(){
-        $traloi = Traloi::all();
-        return view('admin.page_admin.dstraloi', compact('traloi'));
     }
 
     public function Xoabinhluan($idbl){
         Comment::find($idbl)->delete();
+        Comment::where('parent_id',$idbl)->delete();
         return redirect()->back()->with('thongbao','Xoa binh luan thanh cong');
     }
 
-    public function Xoatraloi($idtl){
-        Traloi::find($idtl)->delete();
-        return redirect()->back()->with('thongbao','Xoa tra loi binh luan thanh cong');
-    }
-
     public function ThongkeDonhang(){
-        $bill = Bill::select('bill.id','tour_id','tentour','sodienthoai','tongtien','timeBD','tinhtrangdon','sokhachdangky','email','bill.created_at')
-            ->join('tour','tour.id','=','bill.tour_id')
-            ->join('users','bill.users_id','=','users.id')
-            ->get();
-
-        return view('admin.page_admin.TKDonhang', compact('bill'));
+        $bill = Bill::all();
+        return view('admin.page_admin.thongke', compact('bill'));
     }
 
     public function ThongkeDoanhthu(){
-        $bill = Bill::select('email','tongtien','bill.id')
-        ->join('tour','tour.id','=','bill.tour_id')
-        ->join('users','tour.users_id','=','users.id')
-        ->where('tinhtrangdon',3)
-        ->get();
-
-        return view('admin.page_admin.TKDoanhthu', compact('bill'));
+        $doanhthu = Bill::where('tinhtrangdon',3)->get();
+        return view('admin.page_admin.thongke', compact('doanhthu'));
     }
-
 }

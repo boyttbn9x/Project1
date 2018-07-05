@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr align="center">
                         <th>Ten tour</th>
@@ -25,9 +25,9 @@
                 <tbody>
                     @foreach($bill as $dsb)
                         <tr class="odd gradeX">
-                            <td>{{$dsb->tentour}}</td>
-                            <td>{{$dsb->email}}</td>
-                            <td>{{$dsb->sodienthoai}}</td>
+                            <td>{{$dsb->tour->tentour}}</td>
+                            <td>{{$dsb->users->email}}</td>
+                            <td>{{$dsb->users->sodienthoai}}</td>
                             <td>{{$dsb->sokhachdangky}}</td>
                             <td>{{number_format($dsb->tongtien)}}</td>
                             <td>{{$dsb->timeBD}}</td> 
@@ -44,9 +44,6 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="row" style="text-align: center">
-                {{$bill->links()}}
-            </div>
         </div>
         @else
         <div class="row">
@@ -56,7 +53,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr align="center">
                         <th>Ten tour</th>
@@ -72,15 +69,15 @@
                 <tbody>
                     @foreach($bill as $dsb)
                     	@if($dsb->tinhtrangdon == 0) 
-                        <tr class="odd gradeX">
-                            <td>{{$dsb->tentour}}</td>
-                            <td>{{$dsb->email}}</td>
-                            <td>{{$dsb->sodienthoai}}</td>
+                        <tr align="center">
+                            <td>{{$dsb->tour->tentour}}</td>
+                            <td>{{$dsb->users->email}}</td>
+                            <td>{{$dsb->users->sodienthoai}}</td>
                             <td>{{$dsb->sokhachdangky}}</td>
                             <td>{{number_format($dsb->tongtien)}}</td>
                             <td>{{$dsb->timeBD}}</td> 
-                            <td class="center"><i class="glyphicon glyphicon-ok"></i><a href="{{route('chapnhan',$dsb->id)}}" onclick = "return chapnhan()"> Chap nhan</a></td>
-                            <td class="center"><i class="glyphicon glyphicon-remove"></i><a href="{{route('tuchoi',$dsb->id)}}" onclick = "return tuchoi()"> Tu choi</a></td> 
+                            <td><i class="glyphicon glyphicon-ok"></i><a href="{{route('chapnhan',$dsb->id)}}" onclick = "return chapnhan()"> Chap nhan</a></td>
+                            <td><i class="glyphicon glyphicon-remove"></i><a href="{{route('tuchoi',$dsb->id)}}" onclick = "return tuchoi()"> Tu choi</a></td> 
                         </tr>
                         @endif
                     @endforeach

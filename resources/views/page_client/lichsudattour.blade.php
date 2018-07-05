@@ -1,7 +1,7 @@
 @extends('master_client')
 @section('content')
 
-<div class="col-md-9 col-xs-9 col-ms-9">
+<div class="col-md-9 col-xs-9 col-sm-9">
 	<div class="panel panel-default">		
 			@if(Session::has('thanhcongTT'))
 				<div class="alert alert-success" align="center">
@@ -17,16 +17,16 @@
 			<div class="row-item row">
 				<div class="col-md-12 border-right">
 					<div class="col-md-3 col-xs-4">
-						@if($ls->hinhanh)
-						<img src="upload/{{$ls->hinhanh}}" width="150" height="110" alt="" style="margin-top:10px">
+						@if($ls->tour->hinhanh)
+						<img src="upload/{{$ls->tour->hinhanh}}" width="150" height="110" alt="" style="margin-top:10px">
 						@else
 						<img src="dulich/image/noimage.png" width="150" height="110" alt="" style="margin-top:10px">
 						@endif
 					</div>
 					<div class="col-md-9 col-xs-8">
-						<h4><a href="chi-tiet-{{$ls->tour_id}}">{{$ls->tentour}}</a></h4>
+						<h4><a href="{{route('chi-tiet',$ls->tour_id)}}">{{$ls->tour->tentour}}</a></h4>
 						
-						<p>Huong dan vien: {{$ls->email}}</p>
+						<p>Huong dan vien: {{$ls->users->email}}</p>
 						<p>Tong tien: {{number_format($ls->tongtien)}} VND</p>
 						<p>Trang thai don: 
 							@if($ls->tinhtrangdon == 0)
@@ -41,9 +41,9 @@
 				                    <button type="submit" style="color: red; padding: 7px; background: #ffffb3">Thanh toan</button>
 				                </form>
 							@elseif($ls->tinhtrangdon == 2)
-								<a>Bi tu choi</a>
+								<a style="color: red"><i class="glyphicon glyphicon-remove"></i> Bi tu choi</a>
 							@elseif($ls->tinhtrangdon == 3)
-								<a>Da thanh toan</a>
+								<a style="color: green"><i class="glyphicon glyphicon-ok"></i> Da thanh toan</a>
 							@endif
 						</p>
 					</div>

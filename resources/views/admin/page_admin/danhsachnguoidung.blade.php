@@ -64,9 +64,8 @@
                         <th>Email</th>
                         <th>So dien thoai</th>
                         <th>Dia chi</th>
-                        <th>Status</th>
                         <th>Xoa</th>
-                        <th>Cap quyen tao tour</th>
+                        <th>Quyen tao tour</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,13 +74,12 @@
                             <td>{{$dsh->hoten}}</td>
                             <td>{{$dsh->email}}</td>
                             <td>{{$dsh->sodienthoai}}</td>
-                            <td>{{$dsh->diachi}}</td>  
-                            <td>{{$dsh->status}}</td>                 
+                            <td>{{$dsh->diachi}}</td>              
                             <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{route('xoahdv1',$dsh->id)}}" onclick="return xoaHdv()"> Delete</a></td>
                             @if($dsh->status == "" || $dsh->status == 1)
                                 <td class="center"><a href="{{route('cnhdv1',$dsh->id)}}" onclick="return chapnhan()"> Chap nhan</a></td>
                             @else
-                                <td></td>
+                                <td class="center">Da co quyen</td>
                             @endif
                         </tr>
                     @endforeach

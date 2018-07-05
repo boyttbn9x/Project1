@@ -24,17 +24,17 @@
 				<div class="col-md-12 border-right">
 					<div class="col-md-9">
 						<h3>{{$cttour->tentour}}</h3>
-						<p>Huong dan vien: <a href="{{route('tthdv',$cttour->users_id)}}"> {{$cttour->hoten}}</a><p>
-						<p>Dia diem: {{$cttour->tendiadiem}}<p>
+						<p>Huong dan vien: <a href="{{route('tthdv',$cttour->users_id)}}"> {{$cttour->users->hoten}}</a><p>
+						<p>Dia diem: {{$cttour->diadiem->tendiadiem}}<p>
 						<p>So khach toi da: {{$cttour->sokhachmax}}</p>
 						<p>Gia tour: {{ number_format($cttour->giatour) }} VND</p>
 						<p><img  class= "img-responsive" src="upload/{{$cttour->hinhanh}}" height="600" width="600" alt=""></p>
 						<p>Mo ta: {{$cttour->mota}}</p><br><br>
 
-						@if(count($image)>0)
+						@if(count($cttour->imagetour)>0)
 							<p>Cac hinh anh khac:</p>
-							@foreach($image as $im)
-								<p><img  class= "img-responsive" src="upload/{{$im->image}}" height="400" width="400" alt=""></p>
+							@foreach($cttour->imagetour as $imt)
+								<p><img  class= "img-responsive" src="upload/{{$imt->image}}" height="400" width="400" alt=""></p>
 							@endforeach
 						@endif
 						<br><br>
@@ -46,9 +46,18 @@
 	                	@endif
 
 						@if(Auth::check())
-							@if(count($checkBill)>0)
+							<?php $co = true ?>
+							@foreach($cttour->bill as $bll)
+								@if(($bll->tinhtrangdon == 0 && $bll->users_id == Auth::user()->id) || ($bll->tinhtrangdon == 1 && $bll->users_id == Auth::user()->id))
+									<?php $co = false ?>
+								@endif
+							@endforeach
+
+							@if($co == false)
 								<a class="btn btn-primary">Ban da dat tour nay</a>
 							@else
+								@if(Auth::user()->quyen == 2 ||Auth::user()->quyen == 3)
+								@else
 								<a class="btn btn-primary" href="" data-toggle="modal" data-target="#DatTour">Dat tour<span class="glyphicon glyphicon-chevron-right"></span></a>
 
 								<div class="modal" id="DatTour">
@@ -73,7 +82,7 @@
 														<br>
 
 										    			<label>Dia diem</label>
-													  	<input type="text" class="form-control" readonly="" name="tendiadiem" value="{{$cttour->tendiadiem}}">
+													  	<input type="text" class="form-control" readonly="" name="tendiadiem" value="{{$cttour->diadiem->tendiadiem}}">
 														<br>
 											    			
 										    			<label>Gia tien</label>
@@ -105,6 +114,7 @@
 								        </div>
 								    </div>
 								</div>
+								@endif
 								@if(count($errors)>0)
 								    @if(Session::has('errorDatTour'))
 									    <script>
@@ -129,19 +139,20 @@
 
 					<div style="clear: both; height: 20px"></div>
 					<span style="font-size: 25px; ">Danh gia:</span>
-						@if(count($rate)>0)
+						@if(count($cttour->rate)>0)
 							<?php
-							$count = count($rate);
-							$sum = 0;
+								$i = 0;
+								$sum = 0;
 							?>
-							@foreach($rate as $rt)
+							@foreach($cttour->rate as $rt)
 								<?php
+									$i++;
 									$sum += $rt->sodiem;
 								?>
 							@endforeach
 							
 							<?php
-								$sosao = round($sum/$count,2);
+								$sosao = round($sum/$i, 2);
 								if($sosao < 1.5){
 									echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>';
 								}elseif($sosao < 2.5){
@@ -154,17 +165,24 @@
 									echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>';
 								}
 								echo '<span style="font-size: 25px; margin-left: 10px">'. $sosao.'</span>';
-								echo '<span style="font-size: 20px; margin-left: 10px; color:#A9A9A9">'.'( '. $count.' luot danh gia)'.'</span>';
+								echo '<span style="font-size: 20px; margin-left: 10px; color:#A9A9A9">'.'( '. $i.' luot danh gia)'.'</span>';
 							?>
 						@else
 							<span style="color:#A9A9A9">Hien chua co luot danh gia nao.</span>
 						@endif
 
+						<?php $flag =true ?>
 						@if(Auth::check())
-							@if(count($bill)>0)
-								@foreach($bill as $bll)
-									@if($bll->users_id == Auth::user()->id)
-										@if(count($checkRate)==0)
+							@foreach($cttour->bill as $bll)
+								@if($bll->users_id == Auth::user()->id && $bll->tinhtrangdon == 3 )
+									@foreach($cttour->rate as $rate)
+										@if($rate->users_id == Auth::user()->id)
+											<?php $flag = false ?>
+											<div class="col-md-9" style="margin-top: 10px; color: #A9A9A9">Ban da danh gia {{$rate->sodiem}} sao cho tour nay.</div>	
+											@break
+										@endif
+									@endforeach
+									@if($flag == true)
 										<div class="col-md-9" style="margin-top: 10px">
 											<a>Danh gia tour: </a>
 											<form action="danh-gia-{{$cttour->id}}" method="post">
@@ -180,15 +198,11 @@
 												<button type="submit">Gui</button>
 											</form>
 										</div>
-										@else
-										<div class="col-md-9" style="margin-top: 10px; color: #A9A9A9">Ban da danh gia @foreach($checkRate as $cR) {{$cR->sodiem}} @endforeach sao cho tour nay.</div>
-										@endif
-									@break	
-									@endif
-								@endforeach
-							@endif
+									@endif									
+								@break	
+								@endif
+							@endforeach
 						@endif
-
 				</div>
 			</div>
 		</div>	
@@ -201,64 +215,57 @@
 
 		<div class="tab-pane fade active in" id="reviews" >
 			<div class="col-sm-12">
-				@foreach($comment as $cm)
+				@foreach($cttour->comment as $cm)
 				<div class="comment">
-				<ul>			
-					<li>
-						<a><i class="fa fa-user"></i>{{$cm->email}}</a>
-						<a style="margin-left: 5px"><i class="fa fa-clock-o"></i>{{$cm->created_at}}</a>
+					<ul>				
+							@if($cm->parent_id == 0)
+							<li>
+								<a><i class="fa fa-user"></i> {{$cm->users->email}}</a>
+								<a style="margin-left: 5px"><i class="fa fa-clock-o"></i> {{$cm->created_at}}</a>
 
-						@if(count($bill)>0)
-							@foreach($bill as $bll)
-								@if($bll->users_id == $cm->users_id)
-									<a style="color:#A9A9A9">( Da di tour nay )</a>
-									@break	
+								@foreach($cttour->bill as $bll)
+									@if($bll->users_id == $cm->users_id)
+										<a style="color:#A9A9A9">( Da di tour nay )</a>
+										@break	
+									@endif
+								@endforeach
+								@if($cm->users_id == $cttour->users_id)
+									<a style="color:#00ffff">( Chu tour )</a>
 								@endif
-							@endforeach
-						@endif
-						@if($cm->users_id == $cttour->users_id)
-							<a style="color:#00ffff">( Chu tour )</a>
-						@endif
+								<br>{{$cm->noidung}}<br>
+							</li>
+							@endif
 
-						<br>{{$cm->noidung}}<br>
-						@foreach($traloi as $tl)
-						@if($tl->parent_id == $cm->id)
-							<div>
-								<ul style="list-style: none">
-									<a><i class="fa fa-user"></i>{{$tl->email}}</a>
-									<a style="margin-left: 5px"><i class="fa fa-clock-o"></i>{{$tl->created_at}}</a>
+							@foreach($cttour->comment as $tl)
+								@if($tl->parent_id == $cm->id)
+									<div>
+										<ul style="list-style: none">
+											<a><i class="fa fa-user"></i>{{$tl->users->email}}</a>
+											<a style="margin-left: 5px"><i class="fa fa-clock-o"></i>{{$tl->created_at}}</a>
 
-									@if(count($bill)>0)
-										@foreach($bill as $bll)
-											@if($bll->users_id == $tl->users_id)
-												<a style="color:#A9A9A9">( Da di tour nay )</a>
-												@break	
+											@foreach($cttour->bill as $bll)
+												@if($bll->users_id == $tl->users_id)
+													<a style="color:#A9A9A9">( Da di tour nay )</a>
+													@break	
+												@endif
+											@endforeach
+
+											@if($tl->users_id == $cttour->users_id)
+												<a style="color:#00ffff">( Chu tour )</a>
 											@endif
-										@endforeach
-									@endif
+											<br>{{$tl->noidung}}<br>
+										</ul>
+									</div>
+								@endif
+							@endforeach 
 
-									@if($tl->users_id == $cttour->users_id)
-										<a style="color:#00ffff">( Chu tour )</a>
-									@endif
-
-									<br>{{$tl->noidung}}<br>
-								</ul>
-							</div>
-						@endif
-						@endforeach 
-
-						@if(Auth::check())
-						<a href="{{route('tra-loi',$cm->id)}}" style="margin-left: 40px ">Tra loi</a>
-						@endif
-					</li>
-							
-				</ul>	
+							@if(Auth::check() && $cm->parent_id ==0)
+							<a href="{{route('tra-loi',$cm->id)}}" style="margin-left: 40px ">Tra loi</a>
+							@endif
+										
+					</ul>	
 				</div>
-				
 				@endforeach
-				<div class="row" style="text-align: center">
-					{{$comment->links()}}
-				</div>
 				
 				<div class="send" style="padding-top: 20px;">
 					@if(count($errors)>0)

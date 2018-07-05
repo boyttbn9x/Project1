@@ -10,7 +10,7 @@ class DiaDiemController extends Controller
 
     public function index()
     {
-        $dsdd = Diadiem::select('id','tendiadiem')->get();
+        $dsdd = Diadiem::all();
         return view('admin.page_admin.danhsachdiadiem', compact('dsdd'));
     }
 
@@ -35,10 +35,10 @@ class DiaDiemController extends Controller
         return redirect()->back()->with('thanhcong','Them dia diem thanh cong');
     }
 
-    public function show($id)
-    {
+    // public function show($id)
+    // {
 
-    }
+    // }
 
 
     public function edit($id)

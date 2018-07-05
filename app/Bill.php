@@ -8,7 +8,7 @@ class Bill extends Model
 {
     protected $table = 'bill';
 
-    public function user(){
+    public function users(){
     	return $this->belongsTo('App\User');
     }
 

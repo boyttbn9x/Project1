@@ -3,7 +3,7 @@
     <div class="container" >
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-            <div class="col-md-6 col-ms-6 col-xs-6">
+            <div class="col-md-6 col-sm-6 col-xs-6">
                 <form action="{{route('tim-kiem')}}" style="margin-top: 8px;">
                     <input type="text" name= "timkiem" class="form-control" placeholder="nhap thong tin tim kiem" style="width: 70%;float: left">
                     <button type="submit" class="btn btn-default" style="margin-left: 5px">Search</button>                                     
@@ -18,6 +18,8 @@
                     @endif
                     @if(Auth::User()->quyen == 2)                    
                         <li><a href="{{route('trang-chu-hdv')}}">Quan ly tour</a></li>
+                    @elseif(Auth::User()->quyen == 3)
+                        <li><a href="{{route('trang-chu-admin')}}">Trang quan ly</a></li>
                     @elseif(Auth::User()->quyen == 1)
                         <li><a href="{{route('lich-su')}}"><i class="glyphicon glyphicon-shopping-cart"></i> Lich su dat tour</a></li>
                     @endif
@@ -44,9 +46,7 @@
             <!-- Modal body -->
             <div class="modal-body">
                 @if(Session::has('thanhcongkhach'))
-                <script type="text/javascript">
-                    alert('Tao tai khoan thanh cong');
-                </script>
+                    <div class="alert alert-success text-center">{{Session::get('thanhcongkhach')}}</div>
                 @endif
 
                 <form action="{{route('dang-ky-khach')}}" method="POST">
@@ -81,13 +81,7 @@
     </div>
 </div>
 @if(count($errors)>0)
-    @if(Session::has('message1'))
-    <script>
-        $(document).ready(function(){
-            $("#DangKyKhach").modal();
-        });
-    </script>
-    @elseif(Session::has('message2'))
+    @if(Session::has('message2'))
     <script>
         $(document).ready(function(){
             $("#DangKyHDV").modal();
@@ -99,7 +93,33 @@
             $("#DangNhap").modal();
         });
     </script>
+    @else
+    <script>
+        $(document).ready(function(){
+            $("#DangKyKhach").modal();
+        });
+    </script>
     @endif
+@endif
+
+@if(Session::has('loiDangNhap'))
+    <script>
+        $(document).ready(function(){
+            $("#DangNhap").modal();
+        });
+    </script>
+@elseif(Session::has('thanhcongkhach'))
+    <script>
+        $(document).ready(function(){
+            $("#DangKyKhach").modal();
+        });
+    </script>
+@elseif(Session::has('thanhconghdv'))
+    <script>
+        $(document).ready(function(){
+            $("#DangKyHDV").modal();
+        });
+    </script>
 @endif
 
 <div class="modal" id="DangKyHDV">
@@ -113,11 +133,8 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-
                 @if(Session::has('thanhconghdv'))
-                <script type="text/javascript">
-                    alert('Tao tai khoan thanh cong');
-                </script>
+                    <div class="alert alert-success text-center">{{Session::get('thanhconghdv')}}</div>
                 @endif
 
                 <form action="{{route('dang-ky-hdv')}}" method="POST">
@@ -167,6 +184,10 @@
 
             <!-- Modal body -->
             <div class="modal-body">
+                @if(Session::has('loiDangNhap'))
+                    <div class="alert alert-danger text-center">{{Session::get('loiDangNhap')}}</div>
+                @endif
+
                 <form action="{{route('dang-nhap')}}" method="POST">
                     <fieldset style="color: blue; font-style: italic;">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -179,7 +200,7 @@
                         <span style="color: red; margin-left: 20px">{{$errors->first('password')}}</span>
                         <input class="form-control" name="password" type="password"><br>
 
-                        <div align="center"><button type="submit" class="btn btn-lg btn-success btn-block" style="width: 20%">Đăng ký</button></div>
+                        <div align="center"><button type="submit" class="btn btn-lg btn-success btn-block" style="width: 20%">Đăng nhap</button></div>
                     </fieldset>
                 </form>
             </div>

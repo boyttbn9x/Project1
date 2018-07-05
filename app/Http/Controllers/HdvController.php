@@ -17,23 +17,12 @@ class HdvController extends Controller
     }
 
     public function getDSdontour(){
-        $iduser = Auth::user()->id;
-        $bill = Bill::select('bill.id','tour_id','tentour','email','sodienthoai','tongtien','timeBD','tinhtrangdon','sokhachdangky')
-                ->where('tour.users_id',$iduser)
-                ->join('tour','tour.id','=','bill.tour_id')
-                ->join('users','bill.users_id','=','users.id')
-                ->paginate(10);
-
+        $bill = Tour::where('users_id', Auth::user()->id)->first()->bill;
         return view('page_hdv.danhsachdondattour', compact('bill'));
     }
 
     public function getDSdontourmoi(){
-        $iduser = Auth::user()->id;
-        $bill = Bill::select('bill.id','tour_id','tentour','email','sodienthoai','tongtien','timeBD','tinhtrangdon','sokhachdangky')
-                ->where('tour.users_id',$iduser)
-                ->join('tour','tour.id','=','bill.tour_id')
-                ->join('users','bill.users_id','=','users.id')
-                ->get();
+        $bill = Tour::where('users_id', Auth::user()->id)->first()->bill;
         $tmp = 'tmp';
         return view('page_hdv.danhsachdondattour', compact('bill','tmp'));
     }

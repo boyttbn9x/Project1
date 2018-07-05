@@ -3,6 +3,7 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
+            @if(isset($bill))
             <div class="col-lg-12">
                 <h1 class="page-header">Danh sach
                     <small>Don hang</small>
@@ -23,8 +24,8 @@
                 <tbody>
                     @foreach($bill as $dsb)
                         <tr class="odd gradeX" align="center">
-                            <td><a href="{{route('chitiet',$dsb->tour_id)}}">{{$dsb->tentour}}</a></td>
-                            <td>{{$dsb->email}}</td>
+                            <td><a href="{{route('chi-tiet',$dsb->tour_id)}}">{{$dsb->tour->tentour}}</a></td>
+                            <td>{{$dsb->users->email}}</td>
                             <td>{{number_format($dsb->tongtien)}}</td>
                             <td>{{$dsb->timeBD}}</td>
                             <td><?php echo date('Y-m-d', strtotime($dsb->created_at)) ?></td>
@@ -41,10 +42,40 @@
                     @endforeach
                 </tbody>
             </table>
+            @elseif(isset($doanhthu))
+            <div class="col-lg-12">
+                <h1 class="page-header">Danh sach
+                    <small>Doanh thu</small>
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr align="center">
+                        <th>HDV</th>
+                        <th>ID don hang</th>
+                        <th>Tong tien</th>
+                        <th>So tien HDV nhan duoc</th>
+                        <th>Trang thai nhan tien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $sum = 0 ?>
+                    @foreach($doanhthu as $dt)
+                        <tr class="odd gradeX" align="center">
+                            <td>{{$dt->email}}</td>
+                            <td>{{$dt->id}}</td>
+                            <td>{{$dt->tongtien}}</td>
+                            <td>{{$dt->tongtien * 9/10}}</td>
+                            <?php $sum += $dt->tongtien ?> 
+                            <td></td>                             
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div style="font-size: 20px">Tong so tien cua tat ca don hang: <b style="color: red"><?php echo $sum.' VND' ?></b></div>
+            @endif
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
 </div>
-<!-- /#page-wrapper -->
 @endsection

@@ -3,7 +3,7 @@
 	if(!empty($email)){
 		$link = mysqli_connect("localhost", "root", "") or die("Không thể kết nối được MySQL Database");
 		$link->set_charset('utf8');
-		mysqli_select_db($link,"doan3");
+		mysqli_select_db($link,"tour");
 
 		$sql = "select * from users where email = '".$email."'";
 		$result = mysqli_query($link,$sql);
