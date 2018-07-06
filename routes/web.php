@@ -18,9 +18,7 @@ Route::get('/', function () {
 
 Route::resource('payment','PaymentController');
 
-Route::get('error',['as' => 'login', 'uses' => 'PageController@getTrangchu']);
 Route::get('trang-chu',['as' => 'trang-chu', 'uses' => 'PageController@getTrangchu']);
-
 Route::get('quy-dinh',['as' => 'quy-dinh', 'uses' => 'PageController@getQuydinh']);
 
 Route::get('chi-tiet/{id}', ['as' => 'chi-tiet', 'uses' => 'TourController@show']);
@@ -28,7 +26,6 @@ Route::get('chi-tiet/{id}', ['as' => 'chi-tiet', 'uses' => 'TourController@show'
 Route::get('dia-diem-{iddd}',['as'=>'diadiem', 'uses'=>'PageController@getDiadiem']);
 
 Route::post('dat-tour-{idtour}',['as' => 'dattour', 'uses' => 'PageController@postDattour']);
-
 Route::get('lich-su-dat-tour',['as'=>'lich-su','uses'=>'PageController@getLichsu']);
 
 Route::get('thong-tin-hdv-{idhdv}',['as' => 'tthdv', 'uses' => 'PageController@getThongtinHDV']);
@@ -57,7 +54,7 @@ Route::get('tim-kiem',['as'=>'tim-kiem','uses' => 'PageController@getTimkiem']);
 
 
 //--------------------HDV------------------
-Route::group(['prefix'=>'hdv','middleware'=>'auth'], function(){
+Route::group(['prefix'=>'hdv','middleware'=>'CheckHDV'], function(){
 	Route::get('trang-chu',['as' => 'trang-chu-hdv', 'uses'=>'HdvController@trangchu']);
 	Route::resource('tour','TourController');
 
@@ -73,7 +70,7 @@ Route::group(['prefix'=>'hdv','middleware'=>'auth'], function(){
 
 
 //------------------ADMIN------------------
-Route::group(['prefix'=>'admin', 'middleware'=>'auth'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'CheckAdmin'],function(){
 	Route::get('trang-chu',['as'=>'trang-chu-admin', 'uses'=> 'AdminController@trangchu']);
 	
 	//quan ly nguoi dung

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\DiaDiem;
+use App\Diadiem;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //share view
         view()->composer('menu', function($view){
-            $diadiem = DiaDiem::all();
+            $diadiem = Diadiem::all();
             $view->with('diadiem',$diadiem);
         });
     }
