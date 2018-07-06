@@ -8,8 +8,7 @@
 		</div>
 
 		<div class="panel-body">
-			<!-- item -->
-			@foreach($idd->tour as $t)
+		@foreach($idd->tour as $t)
 			<div class="row-item row">
 				<div class="col-md-12 border-right">
 					<div class="col-md-3 col-xs-4">

@@ -22,7 +22,7 @@
 			
 			<div class="row-item row">
 				<div class="col-md-12 border-right">
-					<div class="col-md-9">
+					<div class="col-md-11 col-xs-11">
 						<h3>{{$cttour->tentour}}</h3>
 						<p>Huong dan vien: <a href="{{route('tthdv',$cttour->users_id)}}"> {{$cttour->users->hoten}}</a><p>
 						<p>Dia diem: {{$cttour->diadiem->tendiadiem}}<p>
@@ -34,8 +34,21 @@
 						@if(count($cttour->imagetour)>0)
 							<p>Cac hinh anh khac:</p>
 							@foreach($cttour->imagetour as $imt)
-								<p><img  class= "img-responsive" src="upload/{{$imt->image}}" height="400" width="400" alt=""></p>
+							<a href="" data-toggle="modal" data-target="#imt{{$imt->id}}" style="float: left">
+								<img src="upload/{{$imt->image}}" height="100" width="100" style="margin: 5px; border: 1px solid red">
+							</a>
+
+							<div class="modal" id="imt{{$imt->id}}">
+							    <div class="modal-dialog modal-lg">
+							        <div class="modal-content">
+							            <div class="modal-body">
+							            	<img class= "img-responsive" src="upload/{{$imt->image}}" width="1000" />
+							            </div>
+							        </div>
+							    </div>
+							</div>
 							@endforeach
+
 						@endif
 						<br><br>
 

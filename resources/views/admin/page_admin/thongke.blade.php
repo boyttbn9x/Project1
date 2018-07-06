@@ -63,7 +63,7 @@
                     <?php $sum = 0 ?>
                     @foreach($doanhthu as $dt)
                         <tr class="odd gradeX" align="center">
-                            <td>{{$dt->email}}</td>
+                            <td>{{$dt->tour->users->email}}</td>
                             <td>{{$dt->id}}</td>
                             <td>{{$dt->tongtien}}</td>
                             <td>{{$dt->tongtien * 9/10}}</td>
