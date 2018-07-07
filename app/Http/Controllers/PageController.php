@@ -138,13 +138,7 @@ class PageController extends Controller
     }
 
     public function postBinhluan($idtour, Request $request){
-        $this -> validate($request,
-            [
-                'noidung'=>'required'
-            ],
-            [
-                'noidung.required'=>'Ban chua nhap noi dung binh luan'
-            ]);
+        if(empty($request->noidung)) return redirect()->back()->with('loiBinhluan','loi binh luan');
         $iduser = Auth::user()->id;
 
         $comment = new Comment();
@@ -227,13 +221,7 @@ class PageController extends Controller
     }
 
     public function getTimkiem(Request $request){
-        $this->validate($request,
-            [
-                'timkiem' => 'required'
-            ],
-            [
-                'timkiem.required'=> 'Vui long nhap thong tin can tim kiem'
-            ]);
+        if(empty($request->timkiem)) return redirect()->back()->with('loiTimkiem','loi tim kiem');
         $tk = $request->timkiem;
         $ketqua = Tour::where('tentour','like','%'.$tk.'%')
                 ->orwhere('giatour',$tk)->paginate(6);
@@ -247,22 +235,14 @@ class PageController extends Controller
         return view('page_client.lichsudattour', compact('lichsu'));
     }
 
-    public function getTraloi($idbl){
-        $bl = Comment::find($idbl);
-        return view('page_client.traloibinhluan',compact('bl'));
-    }
+
 
     public function postTraloi($idbl, Request $request){
         $iduser= Auth::user()->id;
         $idtour = Comment::find($idbl)->tour_id;
 
-        $this->validate($request,
-            [
-                'traloi'=>'required'
-            ],
-            [   
-                'traloi.required'=>'Vui long nhap cau tra loi'
-            ]);
+        if(empty($request->traloi)) return redirect()->route('chi-tiet',$idtour)->with('loiTraLoi','loi tra loi.');
+
         $traloi = new Comment();
         $traloi->parent_id = $idbl;
         $traloi->users_id = $iduser;

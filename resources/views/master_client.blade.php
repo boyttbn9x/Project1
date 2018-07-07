@@ -48,9 +48,21 @@
                 }
             })
         })
+
+        $('.tlbl').click(function(){
+            traloi = $(this).attr('href');
+            $(traloi).toggle();
+        })
+        $('#bl').click(function(){
+            $('#danhgia').hide();
+            $('#reviews').show();
+        })
+        $('#dg').click(function(){
+            $('#reviews').hide();
+            $('#danhgia').show();      
+        })
     })
     </script>
-
     <style type="text/css">
         .slide-image {
             width: 100%;
@@ -72,9 +84,8 @@
         @include('slide_client')
         <div style="width: 100%; height: 30px"></div>
         @include('menu')
-        @yield('content')    
+        @yield('content')
     </div>
-
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script type="text/javascript">

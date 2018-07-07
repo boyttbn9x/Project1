@@ -121,6 +121,11 @@
         });
     </script>
 @endif
+@if(Session::has('loiTimkiem'))
+    <script>
+        alert('Vui long nhap thong tin can tim kiem.')
+    </script>
+@endif
 
 <div class="modal" id="DangKyHDV">
     <div class="modal-dialog">
