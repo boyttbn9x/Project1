@@ -39,7 +39,6 @@ Route::get('dang-xuat',['as'=>'dang-xuat', 'uses'=> 'PageController@getDangxuat'
 
 //Binh luan va tra loi
 Route::post('binh-luan-{idtour}',['as'=>'binh-luan', 'uses'=> 'PageController@postBinhluan']);
-Route::get('tra-loi-{idbl}',['as'=>'tra-loi', 'uses'=> 'PageController@getTraloi']);
 Route::post('tra-loi-{idbl}',['as'=>'tra-loi', 'uses'=> 'PageController@postTraloi']);
 
 //danh gia tour
