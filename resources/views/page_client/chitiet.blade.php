@@ -52,12 +52,6 @@
 						@endif
 						<br>
 
-						@if(session('successDatTour'))
-	                	<script type="text/javascript">
-	             			alert('Dat tour thanh cong.');
-	                	</script>
-	                	@endif
-
 						@if(Auth::check())
 							<?php $co = true ?>
 							@foreach($cttour->bill as $bll)
@@ -81,12 +75,10 @@
 								            <div class="modal-header" style="background-color: #66FFFF">  
 								                <div align="center" style="font-size: 32px; font-weight: bold; color: red">Dat Tour</div>
 								            </div>
-
+											
 								            <!-- Modal body -->
 								            <div class="modal-body">
-
 								                <form action="{{route('dattour',$cttour->id)}}" method="POST">
-
 								                    <fieldset style="color: blue; font-style: italic;">
 								                    	<input type="hidden" name="_token" value="{{csrf_token()}}">
 
@@ -127,15 +119,6 @@
 								        </div>
 								    </div>
 								</div>
-								@endif
-								@if(count($errors)>0)
-								    @if(Session::has('errorDatTour'))
-									    <script>
-									        $(document).ready(function(){
-									            $("#DatTour").modal();
-									        });
-									    </script>
-									@endif
 								@endif
 								@if(session('loi'))
 									<script>
@@ -180,13 +163,13 @@
 					<?php
 						$sosao = round($sum/$i, 2);
 						if($sosao < 1.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>';
+							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
 						}elseif($sosao < 2.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>';
+							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
 						}elseif($sosao < 3.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>';
+							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
 						}elseif($sosao < 4.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star-empty" style="color: yellow;"></i>';
+							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
 						}else{
 							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>';
 						}
@@ -215,15 +198,15 @@
 									<a>Danh gia tour: </a>
 									<form action="danh-gia-{{$cttour->id}}" method="post">
 										<input type="hidden" name="_token" value="{{csrf_token()}}" >  
-										<select name="sodiem">
-											<option value="0">Chon so diem danh gia</option>
-											<option value="1">1 sao</option>
-											<option value="2">2 sao</option>
-											<option value="3">3 sao</option>
-											<option value="4">4 sao</option>
-											<option value="5">5 sao</option>
-										</select>
-										<button type="submit">Gui</button>
+										<div style="float: left;">
+											<i class="glyphicon glyphicon-star" id="dg1" style="color: #DDDDDD;"></i>
+											<i class="glyphicon glyphicon-star" id="dg2" style="color: #DDDDDD;"></i>
+											<i class="glyphicon glyphicon-star" id="dg3" style="color: #DDDDDD;"></i>
+											<i class="glyphicon glyphicon-star" id="dg4" style="color: #DDDDDD;"></i>
+											<i class="glyphicon glyphicon-star" id="dg5" style="color: #DDDDDD;"></i>
+										</div>
+										<input type="hidden" name="sodiem" value="0" id="sodiemdanhgia">
+										<button type="submit" style="margin-left: 25px;">Gui</button>
 									</form>
 									<br><br>
 								</div>
@@ -237,10 +220,10 @@
 
 		<div id="reviews">
 			<div class="col-sm-12">
-				@foreach($cttour->comment as $cm)
 				<div class="comment">
-					<ul>				
-						@if($cm->parent_id == 0)
+				@foreach($cttour->comment as $cm)						
+					@if($cm->parent_id == 0)
+					<ul>
 						<li>
 							<a><i class="fa fa-user"></i> {{$cm->users->email}}</a>
 							<a style="margin-left: 5px"><i class="fa fa-clock-o"></i> {{$cm->created_at}}</a>
@@ -254,14 +237,15 @@
 							@if($cm->users_id == $cttour->users_id)
 								<a style="color:#00ffff">( Chu tour )</a>
 							@endif
-							<br>{{$cm->noidung}}<br>
+							<br>{{$cm->noidung}}
 						</li>
-						@endif
+					</ul>
+					@endif
 
 						@foreach($cttour->comment as $tl)
 							@if($tl->parent_id == $cm->id)
 								<div>
-									<ul style="list-style: none">
+									<ul style="list-style: none; margin-left: 30px;">
 										<a><i class="fa fa-user"></i>{{$tl->users->email}}</a>
 										<a style="margin-left: 5px"><i class="fa fa-clock-o"></i>{{$tl->created_at}}</a>
 
@@ -275,28 +259,31 @@
 										@if($tl->users_id == $cttour->users_id)
 											<a style="color:#00ffff">( Chu tour )</a>
 										@endif
-										<br>{{$tl->noidung}}<br>
+										<br>{{$tl->noidung}}
 									</ul>
 								</div>
 							@endif
 						@endforeach 
 
 						@if(Auth::check() && $cm->parent_id ==0)
-						<a style="margin-left: 50px" href="#tlbl{{$cm->id}}" class="tlbl" data-toggle ="tab">Tra loi</a>
-
-						<div id="tlbl{{$cm->id}}" style="display: none;">
+						<a style="margin-left: 90px" href="#tlbl{{$cm->id}}" class="tlbl" data-toggle ="tab">Tra loi</a>
+						@if(Session::has('loiTraloi'))
+							<script type="text/javascript">
+								alert('Vui long nhap noi dung tra loi.');
+							</script>
+						@endif
+						<div id="tlbl{{$cm->id}}" style="display: none;" class="traloi">
 							<form method="post" action="{{route('tra-loi',$cm->id)}}">
 					            <input type="hidden" name="_token" value="{{csrf_token()}}" >           
 					            <div class="form-group">
-					                <input type="text" class="form-control" name="traloi" style="width: 80%; float: left; margin:0 10px">
+					                <input type="text" class="form-control" name="traloi" style="width: 80%; float: left; margin-left: 90px">
 					                <button type="submit" class="btn btn-success">Gui</button>
 					            </div>	            	
 					        </form>
 						</div>
-						@endif								
-					</ul>	
-				</div>
+					@endif						
 				@endforeach
+				</div>
 				
 				<div class="send" style="padding-top: 20px;">
 					@if(Session::has('loiBinhluan'))
@@ -311,9 +298,8 @@
 						
 						<div align="center">
 							<textarea name="noidung" rows="5" cols="100" style="border-radius: 5px"></textarea>
-							<button type="submit">
-								Gui binh luan
-							</button>
+							<button type="submit">Gui binh luan</button>
+						</div>
 					</form>
 					@endif
 					<br><br>

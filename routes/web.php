@@ -71,7 +71,7 @@ Route::group(['prefix'=>'hdv','middleware'=>'CheckHDV'], function(){
 //------------------ADMIN------------------
 Route::group(['prefix'=>'admin','middleware'=>'CheckAdmin'],function(){
 	Route::get('trang-chu',['as'=>'trang-chu-admin', 'uses'=> 'AdminController@trangchu']);
-	
+
 	//quan ly nguoi dung
 	Route::get('dskhach',['as'=>'dskhach1', 'uses'=> 'AdminController@getDSkhach']);
 	Route::get('xoakhach/{idk}',['as'=>'xoakhach1', 'uses'=> 'AdminController@Xoakhach']);

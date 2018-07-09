@@ -2,7 +2,7 @@
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
-    	@if(!isset($tmp))
+    	@if(isset($bill))
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Danh sach
@@ -45,13 +45,18 @@
                 </tbody>
             </table>
         </div>
-        @else
+        @elseif(isset($newbill))
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Danh sach
                     <small>Don dat tour moi</small>
                 </h1>
             </div>
+            @if(Session::has('chapnhan'))
+                <div class="alert alert-success" style="margin-top: 100px; width: 40%" align="center">{{Session::get('chapnhan')}}</div>
+            @elseif(Session::has('tuchoi'))
+                <div class="alert alert-danger" style="margin-top: 100px; width: 40%" align="center">{{Session::get('tuchoi')}}</div>
+            @endif
             <!-- /.col-lg-12 -->
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
@@ -67,7 +72,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($bill as $dsb)
+                    @foreach($newbill as $dsb)
                     	@if($dsb->tinhtrangdon == 0) 
                         <tr align="center">
                             <td>{{$dsb->tour->tentour}}</td>

@@ -16,7 +16,7 @@
                     @else
                         <li><a href="{{route('thong-tin-ca-nhan')}}"><i class="fa fa-user"></i> {{Auth::User()->hoten}} </a></li>
                     @endif
-                    @if(Auth::User()->quyen == 2)                    
+                    @if(Auth::User()->quyen == 2)
                         <li><a href="{{route('trang-chu-hdv')}}">Quan ly tour</a></li>
                     @elseif(Auth::User()->quyen == 3)
                         <li><a href="{{route('trang-chu-admin')}}">Trang quan ly</a></li>
@@ -93,6 +93,12 @@
             $("#DangNhap").modal();
         });
     </script>
+    @elseif(Session::has('errorDatTour'))
+        <script>
+            $(document).ready(function(){
+                $("#DatTour").modal();
+            });
+        </script>
     @else
     <script>
         $(document).ready(function(){
@@ -101,7 +107,11 @@
     </script>
     @endif
 @endif
-
+@if(session('successDatTour'))
+    <script type="text/javascript">
+        alert('Dat tour thanh cong.');
+    </script>
+@endif
 @if(Session::has('loiDangNhap'))
     <script>
         $(document).ready(function(){

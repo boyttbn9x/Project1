@@ -24,18 +24,18 @@
                 <h2 style="margin-top:0px; margin-bottom:0px; text-align: center;"> Them anh khac cho Tour</h2>
             </div>
             <div class="panel-body">
-                <form action="{{route('them-anh-tour',$idt->id)}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('them-anh-tour',$tour->id)}}" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"> 
 
                     <label>Ten tour</label>
-                    <input type="text" class="form-control" name="tentour" value="{{$idt->tentour}}" readonly="">
+                    <input type="text" class="form-control" name="tentour" value="{{$tour->tentour}}" readonly="">
                     <br>
                     
                     <label>Hinh anh khac</label>
                     <input type="file" class="form-control" name="image">
                     <br>
 
-                    @if(count($checkImage) >= 5)
+                    @if($tour->imagetour->count() >= 5)
                         <div class="alert alert-danger text-center">Toi da chi them duoc 5 anh</div>
                     @else
                         <div align="center"><button type="submit" class="btn btn-success">Them</button></div>
