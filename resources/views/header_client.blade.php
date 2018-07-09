@@ -81,28 +81,28 @@
     </div>
 </div>
 @if(count($errors)>0)
-    @if(Session::has('message2'))
+    @if(Session::has('loiDangKyKhach'))
+    <script>
+        $(document).ready(function(){
+            $("#DangKyKhach").modal();
+        });
+    </script>
+    @elseif(Session::has('loiDangKyHDV'))
     <script>
         $(document).ready(function(){
             $("#DangKyHDV").modal();
         });
     </script>
-    @elseif(Session::has('message3'))
+    @elseif(Session::has('loiDangNhap'))
     <script>
         $(document).ready(function(){
             $("#DangNhap").modal();
         });
     </script>
     @elseif(Session::has('errorDatTour'))
-        <script>
-            $(document).ready(function(){
-                $("#DatTour").modal();
-            });
-        </script>
-    @else
     <script>
         $(document).ready(function(){
-            $("#DangKyKhach").modal();
+            $("#DatTour").modal();
         });
     </script>
     @endif
@@ -112,7 +112,7 @@
         alert('Dat tour thanh cong.');
     </script>
 @endif
-@if(Session::has('loiDangNhap'))
+@if(Session::has('loiLogin'))
     <script>
         $(document).ready(function(){
             $("#DangNhap").modal();
@@ -134,6 +134,11 @@
 @if(Session::has('loiTimkiem'))
     <script>
         alert('Vui long nhap thong tin can tim kiem.')
+    </script>
+@endif
+@if(Session::has('errorReply'))
+    <script type="text/javascript">
+        alert('Vui long nhap noi dung tra loi.');
     </script>
 @endif
 
@@ -199,8 +204,8 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                @if(Session::has('loiDangNhap'))
-                    <div class="alert alert-danger text-center">{{Session::get('loiDangNhap')}}</div>
+                @if(Session::has('loiLogin'))
+                    <div class="alert alert-danger text-center">{{Session::get('loiLogin')}}</div>
                 @endif
 
                 <form action="{{route('dang-nhap')}}" method="POST">

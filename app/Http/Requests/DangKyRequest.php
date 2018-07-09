@@ -23,6 +23,7 @@ class DangKyRequest extends FormRequest
      */
     public function rules()
     {
+        $this->session()->flash('loiDangKyKhach','loi dang ky');
         return [
             'hoten'=>'required',
             'email'=> 'required|email|unique:users,email',

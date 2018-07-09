@@ -114,8 +114,8 @@
 
             $(".menu1").next('ul').toggle();
 
-            $(".menu1").click(function(event) {
-                $(this).next('ul').toggle(500);
+            $(".menu1").mouseover(function(event) {
+                $(this).next('ul').show(500);
             });
         });
     </script>

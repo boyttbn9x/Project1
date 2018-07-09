@@ -35,11 +35,10 @@ class DiaDiemController extends Controller
         return redirect()->back()->with('thanhcong','Them dia diem thanh cong');
     }
 
-    // public function show($id)
-    // {
+    public function show($id)
+    {
 
-    // }
-
+    }
 
     public function edit($id)
     {
