@@ -51,7 +51,8 @@
 
         $('.tlbl').click(function(){
             traloi = $(this).attr('href');
-            $(traloi).toggle();
+            $('.traloi').slideUp();
+            $(traloi).slideToggle();
         })
         $('#bl').click(function(){
             $('#danhgia').hide();
@@ -61,6 +62,19 @@
             $('#reviews').hide();
             $('#danhgia').show();      
         })
+
+        $('.glyphicon-star').click(function(){
+            danhgia = $(this).attr('id');
+            for(var i = 1; i <= 5; i++){
+                dg = '#dg' + i;
+                if(i <= danhgia[2]){        
+                    $(dg).css('color','yellow');
+                }else{
+                    $(dg).css('color','#DDDDDD');
+                }
+            }
+            $('#sodiemdanhgia').val(danhgia[2]);
+        });
     })
     </script>
     <style type="text/css">

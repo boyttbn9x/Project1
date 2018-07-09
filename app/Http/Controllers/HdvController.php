@@ -22,29 +22,23 @@ class HdvController extends Controller
     }
 
     public function getDSdontourmoi(){
-        $bill = Tour::where('users_id', Auth::user()->id)->first()->bill;
-        $tmp = 'tmp';
-        return view('page_hdv.danhsachdondattour', compact('bill','tmp'));
+        $newbill = Tour::where('users_id', Auth::user()->id)->first()->bill;
+        return view('page_hdv.danhsachdondattour', compact('newbill'));
     }
 
     public function getChapnhandon($idd){
-        $don = Bill::find($idd);
-        $don -> tinhtrangdon = 1;
-        $don -> save();
+        $don = Bill::find($idd)->update(['tinhtrangdon' => 1]);
         return redirect()->back()->with('chapnhan','Chap nhan don dat tour thanh cong');
     }
 
     public function getTuchoidon($idd){
-        $don = Bill::find($idd);
-        $don -> tinhtrangdon = 2;
-        $don -> save();
+        $don = Bill::find($idd)->update(['tinhtrangdon' => 2]);
         return redirect()->back()->with('tuchoi','Tu choi don dat tour thanh cong');
     }
 
     public function getThemAnh($idtour){
-        $idt = Tour::find($idtour);
-        $checkImage = ImageTour::where('tour_id',$idtour)->get();
-        return view('page_hdv.themanhtour', compact('idt','checkImage'));
+        $tour = Tour::find($idtour);
+        return view('page_hdv.themanhtour', compact('tour'));
     }
 
     public function postThemAnh($idtour, Request $request){

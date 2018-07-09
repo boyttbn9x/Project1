@@ -139,11 +139,10 @@ class PageController extends Controller
 
     public function postBinhluan($idtour, Request $request){
         if(empty($request->noidung)) return redirect()->back()->with('loiBinhluan','loi binh luan');
-        $iduser = Auth::user()->id;
 
         $comment = new Comment();
         $comment->noidung = $request->noidung;
-        $comment->users_id = $iduser;
+        $comment->users_id = Auth::user()->id;
         $comment->parent_id = 0;
         $comment->tour_id = $idtour;
         $comment->save();
@@ -235,35 +234,26 @@ class PageController extends Controller
         return view('page_client.lichsudattour', compact('lichsu'));
     }
 
-
-
     public function postTraloi($idbl, Request $request){
-        $iduser= Auth::user()->id;
-        $idtour = Comment::find($idbl)->tour_id;
-
         if(empty($request->traloi)) return redirect()->route('chi-tiet',$idtour)->with('loiTraLoi','loi tra loi.');
-
+   
         $traloi = new Comment();
         $traloi->parent_id = $idbl;
-        $traloi->users_id = $iduser;
-        $traloi->tour_id = $idtour;
+        $traloi->users_id = Auth::user()->id;
+        $traloi->tour_id = Comment::find($idbl)->tour_id;
         $traloi->noidung = $request->traloi;
         $traloi->save();
-        return redirect()->route('chi-tiet',$idtour);
+        return redirect()->back();
     }
 
     public function Danhgia($idtour, Request $request){
-        $iduser = Auth::user()->id;
         if($request->sodiem == 0) return redirect()->back()->with('errorRate','Loi danh gia!');
-        else
-        {
-            $rate = new Rate();
-            $rate->tour_id = $idtour;
-            $rate->users_id = $iduser;
-            $rate->sodiem = $request->sodiem;
-            $rate->save();
-            return redirect()->back()->with('successRate','Cam on ban da danh gia tour.');
-        }
+
+        $rate = new Rate();
+        $rate->tour_id = $idtour;
+        $rate->users_id = Auth::user()->id;
+        $rate->sodiem = $request->sodiem;
+        $rate->save();
     }
 
 }
