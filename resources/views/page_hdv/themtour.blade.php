@@ -1,17 +1,8 @@
 @extends('layout_hdv.index')
 @section('content')
 <div id="page-wrapper">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-8">
-        <div class="panel panel-default" style="width: 80%; margin-top: 20px" >
-            @if(count($errors)>0)
-                <div class="alert alert-danger">
-                    @foreach($errors->all() as $err)
-                        {{$err}}<br>
-                    @endforeach
-                </div>
-            @endif
+    <div class="col-md-8 col-sm-8 col-xs-8 col-sm-offset-2">
+        <div class="panel panel-default" style="margin-top: 20px" >
             @if(session('thanhcong'))
                 <div class="alert alert-success">
                     {{Session::get('thanhcong')}}
@@ -42,6 +33,7 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}"> 
 
                     <label>Ten tour</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('tentour')}}</span>
                     <input type="text" class="form-control" name="tentour"value="{{old('tentour')}}">
                     <br>
 
@@ -54,15 +46,18 @@
                     <br>
 
                     <label>So khach max</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('sokhachmax')}}</span>
                     <input type="text" class="form-control" name="sokhachmax" value="{{old('sokhachmax')}}">
                     <br>
 
                     <label>Gia tour</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('giatour')}}</span>
                     <input type="text" class="form-control" name="giatour" value="{{old('giatour')}}">
                     <br>
 
                     <label>Mo ta</label>
-                    <textarea class="form-control" name="mota" rows="8">{{old('mota')}}</textarea>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('mota')}}</span>
+                    <textarea class="form-control" name="mota" rows="8" class="ckeditor" id="mota">{{old('mota')}}</textarea>
                     <br>
 
                     <label>Hinh anh</label>
@@ -84,6 +79,7 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}"> 
 
                     <label>Ten tour</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('tentour')}}</span>
                     <input type="text" class="form-control" name="tentour"value="{{$idt->tentour}}">
                     <br>
 
@@ -96,14 +92,17 @@
                     <br>
 
                     <label>So khach max</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('sokhachmax')}}</span>
                     <input type="text" class="form-control" name="sokhachmax" value="{{$idt->sokhachmax}}">
                     <br>
 
                     <label>Gia tour</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('giatour')}}</span>
                     <input type="text" class="form-control" name="giatour" value="{{$idt->giatour}}">
                     <br>
 
                     <label>Mo ta</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('mota')}}</span>
                     <textarea class="form-control" name="mota" rows="8">{{$idt->mota}}</textarea>
                     <br>
 
@@ -118,8 +117,6 @@
             </div>
             @endif
         </div>
-    </div>
-    <div class="col-md-3">
     </div>
 </div>
 @endsection

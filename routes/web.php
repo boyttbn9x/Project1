@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 
-Route::resource('payment','PaymentController');
+Route::resource('payment','PaymentController',['only'=>['create','store']]);
 
 Route::get('trang-chu',['as' => 'trang-chu', 'uses' => 'PageController@getTrangchu']);
 Route::get('quy-dinh',['as' => 'quy-dinh', 'uses' => 'PageController@getQuydinh']);

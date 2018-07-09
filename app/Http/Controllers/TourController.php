@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TaoTourRequest;
 use App\Tour;
 use App\User;
 use App\Bill;
@@ -27,28 +28,13 @@ class TourController extends Controller
         return view('page_hdv.themtour',compact('dd'));
     }
 
-    public function store(Request $request)
+    public function store(TaoTourRequest $request)
     {
-        $this -> validate($request,
-            [
-                'tentour'=>'required',
-                'sokhachmax'=>'required|integer',
-                'giatour'=>'required|integer',
-                'mota'=>'required',
-            ],
-            [
-                'tentour.required'=>'Vui long nhap ten tour',
-                'sokhachmax.required'=>'Vui long nhap so khach toi da',
-                'sokhachmax.integer'=>'So khach max la 1 con so',
-                'giatour.required'=>'Vui long nhap gia tour',
-                'giatour.integer'=>'Gia tien la 1 con so',
-                'mota.required'=>'Vui long nhap mo ta',
-            ]);
         if($request->sokhachmax <= 0) return redirect()->back()->with('loiSokhachmax','So khach max phai lon hon 0');
         if($request->giatour <= 0) return redirect()->back()->with('loiGiatour','Gia tour phai lon hon 0');
-        $iduser = Auth::user()->id;
+        
         $tour = new Tour();
-        $tour->users_id= $iduser;
+        $tour->users_id= Auth::user()->id;
         $tour->tentour= $request->tentour;
         $tour->diadiem_id= $request->diadiem;
         $tour->sokhachmax=$request->sokhachmax;
@@ -94,23 +80,8 @@ class TourController extends Controller
         return view('page_hdv.themtour', compact('idt','dd'));
     }
 
-    public function update(Request $request, Tour $tour)
+    public function update(TaoTourRequest $request, Tour $tour)
     {
-        $this->validate($request,
-            [
-                'tentour'=>'required',
-                'sokhachmax'=>'required|integer',
-                'giatour'=>'required|integer',
-                'mota'=>'required',
-            ],
-            [
-                'tentour.required'=>'Vui long nhap ten tour',
-                'sokhachmax.required'=>'Vui long nhap so khach toi da',
-                'sokhachmax.integer'=>'So khach max la 1 con so',
-                'giatour.required'=>'Vui long nhap gia tour',
-                'giatour.integer'=>'Gia tien la 1 con so',
-                'mota.required'=>'Vui long nhap mo ta',
-            ]);
         $tour->tentour=$request->tentour;
         $tour->giatour=$request->giatour;
         $tour->mota=$request->mota;

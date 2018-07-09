@@ -146,35 +146,26 @@
 			<br>
 		</div>
 
+		@if(Session::has('successRate'))
+			<script type="text/javascript">
+				$('#danhgia').show();
+			</script>
+		@endif
+
 		<div id="danhgia" style="display: none">
 			<div class="col-sm-12">
-				@if(count($cttour->rate)>0)
+				@if($cttour->rate->count() > 0)				
 					<?php
-						$i = 0;
-						$sum = 0;
-					?>
-					@foreach($cttour->rate as $rt)
-						<?php
-							$i++;
-							$sum += $rt->sodiem;
-						?>
-					@endforeach
-					
-					<?php
-						$sosao = round($sum/$i, 2);
-						if($sosao < 1.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
-						}elseif($sosao < 2.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
-						}elseif($sosao < 3.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
-						}elseif($sosao < 4.5){
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
-						}else{
-							echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>'.'<i class="glyphicon glyphicon-star" style="color: yellow;"></i>';
-						}
-						echo '<span style="font-size: 25px; margin-left: 10px">'. $sosao.'</span>';
-						echo '<span style="font-size: 20px; margin-left: 10px; color:#A9A9A9">'.'( '. $i.' luot danh gia)'.'</span>';
+						$sosao = round($cttour->rate->avg('sodiem'), 2);
+						for ($i=1; $i <= 5 ; $i++) { 
+							if ($i <= $sosao) {
+								echo '<i class="glyphicon glyphicon-star" style="color: yellow;"></i>';
+							}else{
+								echo '<i class="glyphicon glyphicon-star" style="color: #DDDDDD;"></i>';
+							}
+						}					
+						echo '<span style="font-size: 25px; margin-left: 10px">'.$sosao.'</span>';
+						echo '<span style="font-size: 20px; margin-left: 10px; color:#A9A9A9">'.'( '. $cttour->rate->count().' luot danh gia)'.'</span>';
 					?>
 				@else
 					<span style="color:#A9A9A9">Hien chua co luot danh gia nao.</span>
@@ -218,7 +209,7 @@
 			</div>
 		</div>
 
-		<div id="reviews">
+		<div id="reviews" style="display: none">
 			<div class="col-sm-12">
 				<div class="comment">
 				@foreach($cttour->comment as $cm)						
@@ -267,10 +258,15 @@
 
 						@if(Auth::check() && $cm->parent_id ==0)
 						<a style="margin-left: 90px" href="#tlbl{{$cm->id}}" class="tlbl" data-toggle ="tab">Tra loi</a>
-						@if(Session::has('loiTraloi'))
+						@if(Session::has('errorReply'))
 							<script type="text/javascript">
-								alert('Vui long nhap noi dung tra loi.');
+								$('#reviews').show();
 							</script>
+						@endif
+						@if(Session::has('successReply'))
+					        <script type="text/javascript">
+					        	$('#reviews').show();
+					        </script>
 						@endif
 						<div id="tlbl{{$cm->id}}" style="display: none;" class="traloi">
 							<form method="post" action="{{route('tra-loi',$cm->id)}}">
@@ -286,11 +282,18 @@
 				</div>
 				
 				<div class="send" style="padding-top: 20px;">
-					@if(Session::has('loiBinhluan'))
+					@if(Session::has('errorComment'))
 				        <script type="text/javascript">
 				        	alert('Vui long nhap binh luan.');
+				        	$('#reviews').show();
 				        </script>
 					@endif
+					@if(Session::has('successComment'))
+				        <script type="text/javascript">
+				        	$('#reviews').show();
+				        </script>
+					@endif
+
 					@if(Auth::check())
 					<p style="margin-left: 40px"><b>Gửi cau hoi hoac nhan xet của bạn về tour</b></p>
 					<form action="binh-luan-{{$cttour->id}}" method="post">
