@@ -19,13 +19,13 @@ class TourController extends Controller
     public function index()
     {
         $tour = Tour::where('users_id', Auth::user()->id)->paginate(10);
-        return view('page_hdv.danhsachtour', compact('tour'));
+        return view('hdv.page_hdv.danhsachtour', compact('tour'));
     }
 
     public function create()
     {
         $dd = Diadiem::all();
-        return view('page_hdv.themtour',compact('dd'));
+        return view('hdv.page_hdv.themtour',compact('dd'));
     }
 
     public function store(TaoTourRequest $request)
@@ -70,14 +70,14 @@ class TourController extends Controller
     public function show($id)
     {
         $cttour = Tour::where('id',$id)->first();
-        return view('page_client.chitiet', compact('cttour'));
+        return view('client.page_client.chitiet', compact('cttour'));
     }
 
     public function edit($id)
     {
         $idt = Tour::find($id);
         $dd = Diadiem::all();
-        return view('page_hdv.themtour', compact('idt','dd'));
+        return view('hdv.page_hdv.themtour', compact('idt','dd'));
     }
 
     public function update(TaoTourRequest $request, Tour $tour)

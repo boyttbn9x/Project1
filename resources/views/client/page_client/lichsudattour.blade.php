@@ -1,4 +1,4 @@
-@extends('master_client')
+@extends('client.layout_client.master_client')
 @section('content')
 
 <div class="col-md-9 col-xs-9 col-sm-9">

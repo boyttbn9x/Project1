@@ -1,4 +1,4 @@
-@extends('layout_hdv.index')
+@extends('hdv.layout_hdv.index')
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">

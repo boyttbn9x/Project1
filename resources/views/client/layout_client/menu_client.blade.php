@@ -1,4 +1,5 @@
-<div class="col-md-3 col-xs-3 col-sm-3">
+<div class="col-md-3 col-xs-3 col-sm-3 ">
+    <div class="space_header"></div>
     <ul class="list-group" id="menu" style="list-style: none">
         <li> 
             <a href="trang-chu" class="list-group-item menu1 active" style="margin-bottom: 5px;">Trang chủ</a>
