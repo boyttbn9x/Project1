@@ -1,4 +1,4 @@
-@extends('layout_hdv.index')
+@extends('hdv.layout_hdv.index')
 @section('content')
 <div id="page-wrapper">
     <div class="col-md-8 col-sm-8 col-xs-8 col-sm-offset-2">

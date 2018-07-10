@@ -1,4 +1,4 @@
-@extends('master_client')
+@extends('client.layout_client.master_client')
 @section('content')
 <div class="col-md-9 col-xs-9 col-ms-9">
 	<div class="panel-heading" style="background-color:#337AB7; color:white;" >	

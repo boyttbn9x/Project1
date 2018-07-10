@@ -13,17 +13,17 @@ use Auth;
 class HdvController extends Controller
 {
     public function trangchu(){
-    	return view('layout_hdv.index');
+    	return view('hdv.layout_hdv.index');
     }
 
     public function getDSdontour(){
         $bill = Tour::where('users_id', Auth::user()->id)->first()->bill;
-        return view('page_hdv.danhsachdondattour', compact('bill'));
+        return view('hdv.page_hdv.danhsachdondattour', compact('bill'));
     }
 
     public function getDSdontourmoi(){
         $newbill = Tour::where('users_id', Auth::user()->id)->first()->bill;
-        return view('page_hdv.danhsachdondattour', compact('newbill'));
+        return view('hdv.page_hdv.danhsachdondattour', compact('newbill'));
     }
 
     public function getChapnhandon($idd){
@@ -38,7 +38,7 @@ class HdvController extends Controller
 
     public function getThemAnh($idtour){
         $tour = Tour::find($idtour);
-        return view('page_hdv.themanhtour', compact('tour'));
+        return view('hdv.page_hdv.themanhtour', compact('tour'));
     }
 
     public function postThemAnh($idtour, Request $request){

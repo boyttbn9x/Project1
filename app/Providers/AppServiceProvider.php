@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //share view
-        view()->composer('menu', function($view){
+        view()->composer('client.layout_client.menu_client', function($view){
             $diadiem = Diadiem::all();
             $view->with('diadiem',$diadiem);
         });

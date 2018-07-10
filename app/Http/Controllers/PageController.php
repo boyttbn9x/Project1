@@ -19,13 +19,13 @@ use Auth;
 class PageController extends Controller
 {
     public function getTrangchu(){
-        $tour=Tour::paginate(6);
-        return view('page_client.index',compact('tour'));
+        $tour=Tour::paginate(10);
+        return view('client.page_client.danhsachtour',compact('tour'));
     }
 
     public function getDiadiem($iddd){
-        $idd= Diadiem::find($iddd);     
-        return view('page_client.diadiem',compact('idd'));
+        $tourdiadiem= Diadiem::find($iddd);     
+        return view('client.page_client.danhsachtour',compact('tourdiadiem'));
     }
 
     public function postDattour($idtour, Request $request){
@@ -48,19 +48,19 @@ class PageController extends Controller
         $bill->timeBD = $request->timeBD;
 
         $tour = Tour::find($idtour);
-        if($tour->sokhachmax < $request->sokhachdangky || $request->sokhachdangky < 0) return redirect()->back()->with('loi','So khach dang ky phai nho hon hoac bang so khach max.');
+        if($tour->sokhachmax < $request->sokhachdangky || $request->sokhachdangky < 0) return redirect()->back()->with('loiKhachMax','So khach dang ky phai nho hon hoac bang so khach max.');
         $bill->sokhachdangky = $request->sokhachdangky;
         $bill->save();
         return redirect()->back()->with('successDatTour','Gui don dat tour thanh cong');
     }
 
-    public function getTourOfHdv($idhdv){
-        $tour=Tour::where('users_id',$idhdv)->paginate(6);
-        return view('page_client.tour_cua_hdv', compact('tour'));
+    public function getTourCuaHdv($idhdv){
+        $tourhdv=Tour::where('users_id',$idhdv)->paginate(12);
+        return view('client.page_client.danhsachtour', compact('tourhdv'));
     }
 
     public function getQuydinh(){
-        return view('page_client.quydinh');
+        return view('client.page_client.quydinh');
     }
 
     public function postDangkykhach(DangKyRequest $req){
@@ -83,7 +83,6 @@ class PageController extends Controller
         $users->diachi = $req->diachi;
         $users->quyen = 2;
         $users->save();
-
         return redirect()->back()->with('thanhconghdv','Dang ky tai khoan thanh cong');
     }
 
@@ -105,7 +104,6 @@ class PageController extends Controller
 
     public function postBinhluan($idtour, Request $request){
         if(empty($request->noidung)) return redirect()->back()->with('errorComment','loi binh luan');
-
         $comment = new Comment();
         $comment->noidung = $request->noidung;
         $comment->users_id = Auth::user()->id;
@@ -117,24 +115,24 @@ class PageController extends Controller
 
     public function getThongtincanhan(){
         $user = Auth::user();
-        return view('page_client.thongtincanhan', compact('user'));
+        return view('client.page_client.thongtincanhan', compact('user'));
     }
 
     public function getThongtinHDV($idhdv){
         $cthdv = User::where('id',$idhdv)->get();
-        return view('page_client.thongtincanhan', compact('cthdv'));
+        return view('client.page_client.thongtincanhan', compact('cthdv'));
     }
 
     public function postSuathongtin(Request $request){
        $this -> validate($request,
             [
                 'hoten'=>'required',
-                'sodienthoai'=>'required|integer',
+                'sodienthoai'=>'required|numeric',
             ],
             [
                 'hoten.required'=>'Vui long nhap ho ten',
                 'sodienthoai.required'=>'Vui long nhap so dien thoai',
-                'sodienthoai.integer'=>'So dien thoai la 1 day so',
+                'sodienthoai.numeric'=>'So dien thoai la 1 day so',
             ]);     
         $user = Auth::user();
         $user->hoten = $request->hoten;
@@ -190,16 +188,16 @@ class PageController extends Controller
     public function getTimkiem(Request $request){
         if(empty($request->timkiem)) return redirect()->back()->with('loiTimkiem','loi tim kiem');
         $tk = $request->timkiem;
-        $ketqua = Tour::where('tentour','like','%'.$tk.'%')
-                ->orwhere('giatour',$tk)->paginate(6);
+        $tourtimkiem = Tour::where('tentour','like','%'.$tk.'%')
+                ->orwhere('giatour',$tk)->paginate(12);
         $count  = Tour::where('tentour','like','%'.$tk.'%')
-                ->orwhere('giatour',$tk)->get();
-        return view('page_client.timkiem',compact('ketqua','count'));
+                ->orwhere('giatour',$tk)->count();
+        return view('client.page_client.danhsachtour',compact('tourtimkiem','count'));
     }
 
     public function getLichsu(){
         $lichsu = Bill::where('users_id',Auth::user()->id)->paginate(6);
-        return view('page_client.lichsudattour', compact('lichsu'));
+        return view('client.page_client.lichsudattour', compact('lichsu'));
     }
 
     public function postTraloi($idbl, Request $request){

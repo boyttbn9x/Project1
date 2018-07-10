@@ -29,7 +29,7 @@ class DangKyHDVRequest extends FormRequest
             'email'=> 'required|email|unique:users,email',
             'password'=> 'required|max:30|min:6',
             'passwordAgain'=> 'same:password',
-            'sodienthoai'=> 'required|integer',
+            'sodienthoai'=> 'required|numeric',
             'diachi'=> 'required',
         ];
     }
@@ -46,7 +46,7 @@ class DangKyHDVRequest extends FormRequest
             'password.max'=> 'Mat khau toi da 30 ky ty',
             'passwordAgain.same'=> 'Mat khau xac nhan khong hop le',
             'sodienthoai.required'=> 'Vui long nhap so dien thoai',
-            'sodienthoai.integer'=> 'So dien thoai la 1 day so',
+            'sodienthoai.numeric'=> 'So dien thoai la 1 day so',
             'diachi.required'=> 'Vui long nhap dia chi',
         ];
     }

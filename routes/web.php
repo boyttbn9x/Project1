@@ -29,7 +29,7 @@ Route::post('dat-tour-{idtour}',['as' => 'dattour', 'uses' => 'PageController@po
 Route::get('lich-su-dat-tour',['as'=>'lich-su','uses'=>'PageController@getLichsu']);
 
 Route::get('thong-tin-hdv-{idhdv}',['as' => 'tthdv', 'uses' => 'PageController@getThongtinHDV']);
-Route::get('tour-cua-hdv-{idhdv}',['as' => 'tour_hdv', 'uses' => 'PageController@getTourOfHdv']);
+Route::get('tour-cua-hdv-{idhdv}',['as' => 'tour_hdv', 'uses' => 'PageController@getTourCuaHdv']);
 
 //dang ky
 Route::post('dang-ky-khach',['as'=>'dang-ky-khach', 'uses'=> 'PageController@postDangkykhach']);
@@ -48,7 +48,6 @@ Route::post('danh-gia-{idtour}',['as'=>'danh-gia','uses' => 'PageController@Danh
 Route::get('thong-tin-ca-nhan',['as'=>'thong-tin-ca-nhan', 'uses' => 'PageController@getThongtincanhan']);
 Route::post('sua-thong-tin',['as'=>'sua-thong-tin', 'uses'=>'PageController@postSuaThongtin']);
 
-//tim kiem
 Route::get('tim-kiem',['as'=>'tim-kiem','uses' => 'PageController@getTimkiem']);
 
 
