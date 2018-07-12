@@ -36,7 +36,11 @@
                             @elseif($dsb->tinhtrangdon == 2) 
                             <td style="color: red"><i class = "glyphicon glyphicon-remove"></i> Bi tu choi</td>
                             @elseif($dsb->tinhtrangdon == 3) 
+                            <td style="color: green"><i class="glyphicon glyphicon-ok"></i> Da thanh toan</td> 
+                            @elseif($dsb->tinhtrangdon == 3) 
                             <td style="color: green"><i class="glyphicon glyphicon-ok"></i> Da thanh toan</td>  
+                            @elseif($dsb->tinhtrangdon == 4) 
+                                <td style="color: #00FA9A"><i class="glyphicon glyphicon-ok"></i> Hoan tat</td>   
                             @endif  
                         </tr>
                     @endforeach

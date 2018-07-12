@@ -1,7 +1,7 @@
 @extends('hdv.layout_hdv.index')
 @section('content')
-<div id="page-wrapper">
-    <div class="col-md-8 col-sm-8 col-xs-8 col-sm-offset-2">
+<div>
+    <div class="col-md-8 col-sm-8 col-xs-8 col-sm-offset-3">
         <div class="panel panel-default" style="margin-top: 20px" >
             @if(session('thanhcong'))
                 <div class="alert alert-success">
@@ -86,7 +86,7 @@
                     <label>Dia diem</label>
                     <select name="diadiem" class="form-control">
                         @foreach($dd as $dc)
-                        <option value="{{$dc->id}}" @if($idt->diadiem_id == $dc->id) selected="selected" @endif >{{$dc->tendiadiem}}</option>
+                        <option value="{{$dc->id}}" @if($idt->diadiem_id == $dc->id) selected="" @endif >{{$dc->tendiadiem}}</option>
                         @endforeach
                     </select>
                     <br>

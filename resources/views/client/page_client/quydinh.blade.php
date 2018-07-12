@@ -12,7 +12,7 @@
 	<p>Truong hop thanh toan xong nhung khong di duoc thi can thong bao len admin truoc hom bat dau chuyen tour de nhan lai 1 phan so tien da thanh toan.(toi da 80% tien da thanh toan, neu sau 3 ngay ke tu thoi diem bat dau cua chuyen tour thi he thong se khong den bu 1 khoan tien nao)</p>
 	<p>Doi voi nhung truong hop co hanh vi pha hoai trang web se bi xoa tai khoan</p>
 	<p>Moi thac mac xin lien he so dien thoai 0123456789</p> -->
-	<div class="panel-body">
+	<div class="panel-body" style="background-color: white">
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo

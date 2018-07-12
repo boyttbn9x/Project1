@@ -58,8 +58,11 @@ Route::group(['prefix'=>'hdv','middleware'=>'CheckHDV'], function(){
 
 	Route::get('dsdontour',['as'=>'dsdontour', 'uses'=>'HdvController@getDSdontour']);
 	Route::get('dsdontourmoi',['as'=>'dsdontourmoi', 'uses'=>'HdvController@getDSdontourmoi']);
+	Route::get('dsdontourthanhtoan',['as'=>'dsdontourthanhtoan', 'uses'=>'HdvController@getDSdontourthanhtoan']);
+
 	Route::get('cndontour/{idd}',['as'=>'chapnhan', 'uses'=>'HdvController@getChapnhandon']);
 	Route::get('tcdontour/{idd}',['as'=>'tuchoi', 'uses'=>'HdvController@getTuchoidon']);
+	Route::get('xacnhan/{idd}',['as'=>'xacnhanditour', 'uses'=>'HdvController@getXacnhanditour']);
 
 	Route::get('themanhtour/{idtour}',['as'=>'them-anh-tour', 'uses'=>'HdvController@getThemAnh']);
 	Route::post('themanhtour/{idtour}',['as'=>'them-anh-tour', 'uses'=>'HdvController@postThemAnh']);

@@ -1,13 +1,15 @@
 @extends('client.layout_client.master_client')
+@section('thongbao')
+	@if(Session::has('thanhcongTT'))
+		<div class="alert alert-success col-md-6 col-md-offset-3 text-center">
+        {{Session::get('thanhcongTT')}}
+        </div>
+    @endif
+@endsection
+	
 @section('content')
-
 <div class="col-md-9 col-xs-9 col-sm-9">
 	<div class="panel panel-default">		
-			@if(Session::has('thanhcongTT'))
-				<div class="alert alert-success" align="center">
-	            {{Session::get('thanhcongTT')}}
-	            </div>
-	        @endif
 		@if(count($lichsu)>0)
 		<div class="panel-heading" style="background-color:#337AB7; color:white;" >
 			<h2 style="margin-top:0px; margin-bottom:0px; text-align: center;"> Danh sach don dat tour</h2>
@@ -36,7 +38,7 @@
 								<form action="{{url('payment')}}" method="POST" role="form">
 				                    {{csrf_field()}}
 				                    <input type="hidden" name="idbill" value="{{$ls->id}}">
-				                    <input type="hidden" name="tentour" value="{{$ls->tentour}}">
+				                    <input type="hidden" name="tentour" value="{{$ls->tour->tentour}}">
 				                    <input type="hidden" name="tongtien" value="{{$ls->tongtien}}">
 				                    <button type="submit" style="color: red; padding: 7px; background: #ffffb3">Thanh toan</button>
 				                </form>
@@ -44,6 +46,8 @@
 								<a style="color: red"><i class="glyphicon glyphicon-remove"></i> Bi tu choi</a>
 							@elseif($ls->tinhtrangdon == 3)
 								<a style="color: green"><i class="glyphicon glyphicon-ok"></i> Da thanh toan</a>
+							@elseif($ls->tinhtrangdon == 4) 
+                                <a style="color: #00FA9A"><i class="glyphicon glyphicon-ok"></i> Thanh cong</a>
 							@endif
 						</p>
 					</div>

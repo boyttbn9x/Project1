@@ -69,7 +69,7 @@ class TourController extends Controller
 
     public function show($id)
     {
-        $cttour = Tour::where('id',$id)->first();
+        $cttour = Tour::find($id);
         return view('client.page_client.chitiet', compact('cttour'));
     }
 

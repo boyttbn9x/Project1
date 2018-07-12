@@ -1,5 +1,4 @@
 <div class="col-md-3 col-xs-3 col-sm-3 ">
-    <div class="space_header"></div>
     <ul class="list-group" id="menu" style="list-style: none">
         <li> 
             <a href="trang-chu" class="list-group-item menu1 active" style="margin-bottom: 5px;">Trang chủ</a>
@@ -7,11 +6,11 @@
         <li> 
             <a href="quy-dinh" class="list-group-item menu1 active" style="margin-bottom: 5px;">Quy định</a>
         </li> 
-        <li href="#" class="list-group-item menu1 active">Địa điểm</li>  
+        <li class="list-group-item menu1 active" style="border-radius: 4px">Địa điểm</li>  
 
-        <ul>
+        <ul class="diadiem">
             @foreach($diadiem as $dd)
-            <li class="list-group-item menu1" style="margin-left: -20px">
+            <li class="list-group-item" style="margin-left: -30px">
                 <a href="{{route('diadiem',$dd->id)}}">{{$dd->tendiadiem}}</a>
             </li>
             @endforeach
