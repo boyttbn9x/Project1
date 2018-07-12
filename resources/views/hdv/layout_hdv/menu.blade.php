@@ -17,6 +17,7 @@
                 <ul class="nav nav-second-level">
                     <li><a href="{{route('dsdontour')}}">Danh sach don dat tour</a></li>
                     <li><a href="{{route('dsdontourmoi')}}">Don dat tour moi</a></li>
+                    <li><a href="{{route('dsdontourthanhtoan')}}">Don dat tour đã thanh toán</a></li>
                 </ul>
             </li>
         </ul>

@@ -17,13 +17,18 @@ class HdvController extends Controller
     }
 
     public function getDSdontour(){
-        $bill = Tour::where('users_id', Auth::user()->id)->first()->bill;
+        $bill = Tour::where('users_id', Auth::user()->id)->get();
         return view('hdv.page_hdv.danhsachdondattour', compact('bill'));
     }
 
     public function getDSdontourmoi(){
-        $newbill = Tour::where('users_id', Auth::user()->id)->first()->bill;
+        $newbill = Tour::where('users_id', Auth::user()->id)->get();
         return view('hdv.page_hdv.danhsachdondattour', compact('newbill'));
+    }
+
+    public function getDSdontourthanhtoan(){
+        $billtt = Tour::where('users_id', Auth::user()->id)->get();
+        return view('hdv.page_hdv.danhsachdondattour', compact('billtt'));
     }
 
     public function getChapnhandon($idd){
@@ -34,6 +39,11 @@ class HdvController extends Controller
     public function getTuchoidon($idd){
         $don = Bill::find($idd)->update(['tinhtrangdon' => 2]);
         return redirect()->back()->with('tuchoi','Tu choi don dat tour thanh cong');
+    }
+
+    public function getXacnhanditour($idd){
+        $don = Bill::find($idd)->update(['tinhtrangdon' => 4]);
+        return redirect()->back()->with('thanhcong','Xac nhan thanh cong');
     }
 
     public function getThemAnh($idtour){

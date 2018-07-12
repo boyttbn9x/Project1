@@ -19,7 +19,7 @@ use Auth;
 class PageController extends Controller
 {
     public function getTrangchu(){
-        $tour=Tour::paginate(10);
+        $tour=Tour::paginate(9);
         return view('client.page_client.danhsachtour',compact('tour'));
     }
 

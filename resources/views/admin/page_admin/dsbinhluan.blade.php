@@ -15,7 +15,6 @@
                 </div>
             @endif   
             <table class="table table-striped table-bordered table-hover">
-               
                 <thead>
                     <tr align="center">
                         <th>Ten tour</th>
@@ -30,17 +29,17 @@
                             <tr class="odd gradeX" align="center">
                                 <td><a href="{{route('chi-tiet',$bl->tour_id)}}">{{$bl->tour->tentour}}</a></td>
                                 <td>{{$bl->users->email}}</td>
-                                <td>{{$bl->noidung}}</td>
-                                <td><i class="fa fa-trash-o  fa-fw"></i><a onclick="return xoa()" href="{{route('xoabinhluan', $bl->id)}}"> Delete</a></td>
+                                <td>{{$bl->noidung}} <br><button id="{{$bl->id}}" class="xemtl">xem tra loi</button></td>
+                                <td><i class="fa fa-trash-o fa-fw"></i><a onclick="return xoa()" href="{{route('xoabinhluan', $bl->id)}}"> Delete</a></td>
                             </tr>
                             @foreach($comment as $tl)
                                 @if($tl->parent_id == $bl->id)
-                                <tr class="odd gradeX" align="center">
-                                    <td></td>
-                                    <td>{{$tl->users->email}}</td>
-                                    <td>{{$tl->noidung}}</td>
-                                    <td><i class="fa fa-trash-o  fa-fw"></i><a onclick="return xoa()" href="{{route('xoabinhluan', $tl->id)}}"> Delete</a></td>
-                                </tr>
+                                    <tr class="odd gradeX xemtraloi{{$bl->id}} xemtraloi"  align="center" style="display: none">
+                                        <td></td>
+                                        <td>{{$tl->users->email}}</td>
+                                        <td>{{$tl->noidung}}</td>
+                                        <td><i class="fa fa-trash-o fa-fw"></i><a onclick="return xoa()" href="{{route('xoabinhluan', $tl->id)}}"> Delete</a></td>
+                                    </tr>
                                 @endif
                             @endforeach
                         @endif          

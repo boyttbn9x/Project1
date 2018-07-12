@@ -59,7 +59,7 @@ class AdminController extends Controller
     }
 
     public function ThongkeDoanhthu(){
-        $doanhthu = Bill::where('tinhtrangdon',3)->get();
+        $doanhthu = Bill::where('tinhtrangdon',4)->get();
         return view('admin.page_admin.thongke', compact('doanhthu'));
     }
 }
