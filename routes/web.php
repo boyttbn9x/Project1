@@ -23,7 +23,7 @@ Route::get('quy-dinh',['as' => 'quy-dinh', 'uses' => 'PageController@getQuydinh'
 
 Route::get('chi-tiet/{id}', ['as' => 'chi-tiet', 'uses' => 'TourController@show']);
 
-Route::get('dia-diem-{iddd}',['as'=>'diadiem', 'uses'=>'PageController@getDiadiem']);
+Route::get('tour-dia-diem-{iddd}',['as'=>'tourdiadiem', 'uses'=>'PageController@getTourDiadiem']);
 
 Route::post('dat-tour-{idtour}',['as' => 'dattour', 'uses' => 'PageController@postDattour']);
 Route::get('lich-su-dat-tour',['as'=>'lich-su','uses'=>'PageController@getLichsu']);
@@ -37,11 +37,7 @@ Route::post('dang-ky-hdv',['as'=>'dang-ky-hdv', 'uses'=> 'PageController@postDan
 Route::post('dang-nhap',['as'=>'dang-nhap', 'uses'=> 'PageController@postDangnhap']);
 Route::get('dang-xuat',['as'=>'dang-xuat', 'uses'=> 'PageController@getDangxuat']);
 
-//Binh luan va tra loi
-Route::post('binh-luan-{idtour}',['as'=>'binh-luan', 'uses'=> 'PageController@postBinhluan']);
-Route::post('tra-loi-{idbl}',['as'=>'tra-loi', 'uses'=> 'PageController@postTraloi']);
-
-//danh gia tour
+//Danh gia
 Route::post('danh-gia-{idtour}',['as'=>'danh-gia','uses' => 'PageController@Danhgia']);
 
 //xem va sua thong tin ca nhan
@@ -75,10 +71,8 @@ Route::group(['prefix'=>'admin','middleware'=>'CheckAdmin'],function(){
 	Route::get('trang-chu',['as'=>'trang-chu-admin', 'uses'=> 'AdminController@trangchu']);
 
 	//quan ly nguoi dung
-	Route::get('dskhach',['as'=>'dskhach1', 'uses'=> 'AdminController@getDSkhach']);
-	Route::get('xoakhach/{idk}',['as'=>'xoakhach1', 'uses'=> 'AdminController@Xoakhach']);
-	Route::get('dshdv',['as'=>'dshdv1', 'uses'=> 'AdminController@getDShdv']);
-	Route::get('xoahdv/{idhdv}',['as'=>'xoahdv1', 'uses'=> 'AdminController@Xoahdv']);
+	Route::get('list-user/{idquyen}',['as'=>'list-user', 'uses'=> 'AdminController@getListUser']);
+	Route::delete('xoa-user/{iduser}',['as'=>'xoa-user', 'uses'=> 'AdminController@deleteUser']);
 	Route::get('chapnhan/{idhdv}',['as'=>'cnhdv1', 'uses'=> 'AdminController@ChapnhanHdv']);
 
 	//quan ly binh luan

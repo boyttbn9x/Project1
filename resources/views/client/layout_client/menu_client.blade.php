@@ -8,10 +8,10 @@
         </li> 
         <li class="list-group-item menu1 active" style="border-radius: 4px">Địa điểm</li>  
 
-        <ul class="diadiem">
+        <ul class="diadiem" style="display: none;">
             @foreach($diadiem as $dd)
             <li class="list-group-item" style="margin-left: -30px">
-                <a href="{{route('diadiem',$dd->id)}}">{{$dd->tendiadiem}}</a>
+                <a href="{{route('tourdiadiem',$dd->id)}}">{{$dd->tendiadiem}}</a>
             </li>
             @endforeach
         </ul>

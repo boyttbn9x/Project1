@@ -1,11 +1,16 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color: #F5ECCE">
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <div class="col-md-6 col-sm-6 col-xs-6">
+    <div class="collapse navbar-collapse col-md-offset-1" id="bs-example-navbar-collapse-1">
+        <div class="col-md-5 col-sm-5 col-xs-5">
             <form action="{{route('tim-kiem')}}" style="margin-top: 8px;">
-                <input type="text" name= "timkiem" class="form-control" placeholder="nhap thong tin tim kiem" style="width: 70%;float: left">
+                <input type="text" name= "timkiem" id="timkiem" class="form-control" placeholder="nhap thong tin tim kiem" style="width: 70%;float: left">
                 <button type="submit" class="btn btn-default" style="margin-left: 5px">Search</button>
             </form>
+            <div style="position: absolute; left: 17px; background-color: white; width: 65%;top: 42px;z-index: 9; display: none;" id="divtimkiem">
+                <ul style="list-style: none; padding: 10px" id="dsketqua">
+                </ul>
+            </div>
         </div>
+        
         <ul class="nav navbar-nav pull-right">
             @if(Auth::check())
                 @if(Auth::User()->anhdaidien != "")

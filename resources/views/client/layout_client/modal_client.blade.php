@@ -123,7 +123,10 @@
                         <span style="color: red; margin-left: 20px">{{$errors->first('password')}}</span>
                         <input class="form-control" name="password" type="password"><br>
 
-                        <div align="center"><button type="submit" class="btn btn-lg btn-success btn-block" style="width: 20%">Đăng nhap</button></div>
+                        <div align="center">
+                            <input type="checkbox" name="ghinho" id="chkGhinho"> <label style="font-size: 20px; font-weight: bold;" id="ghinho">Ghi nho dang nhap</label> <br><br>
+                            <button type="submit" class="btn btn-lg btn-success btn-block" style="width: 20%">Đăng nhap</button>
+                        </div>
                     </fieldset>
                 </form>
             </div>
@@ -343,22 +346,6 @@
 @if(Session::has('loiTimkiem'))
     <script>
         alert('Vui long nhap thong tin can tim kiem.')
-    </script>
-@endif
-
-@if(Session::has('errorComment') || Session::has('errorReply'))
-    <script>
-        alert('Vui long nhap noi dung binh luan / tra loi.');
-        $(document).ready(function(){
-            $('#reviews').show();
-        });
-    </script>
-@endif
-@if(Session::has('successReply') || Session::has('successComment'))
-    <script>
-        $(document).ready(function(){
-            $('#reviews').show();
-        });
     </script>
 @endif
 
