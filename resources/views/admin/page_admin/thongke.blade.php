@@ -27,7 +27,7 @@
                             <td><a href="{{route('chi-tiet',$dsb->tour_id)}}">{{$dsb->tour->tentour}}</a></td>
                             <td>{{$dsb->users->email}}</td>
                             <td>{{number_format($dsb->tongtien)}}</td>
-                            <td>{{$dsb->timeBD}}</td>
+                            <td>{{$dsb->thoigianbatdau}}</td>
                             <td><?php echo date('Y-m-d', strtotime($dsb->created_at)) ?></td>
                             @if($dsb->tinhtrangdon == 0) 
                             <td style="color: blue">Don moi</td> 

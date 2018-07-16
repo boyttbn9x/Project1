@@ -30,7 +30,7 @@
                                 <td>{{$dsb->users->sodienthoai}}</td>
                                 <td>{{$dsb->sokhachdangky}}</td>
                                 <td>{{number_format($dsb->tongtien)}}</td>
-                                <td>{{$dsb->timeBD}}</td> 
+                                <td>{{$dsb->thoigianbatdau}}</td> 
                                 @if($dsb->tinhtrangdon == 0) 
                                 <td style="color: blue">Don moi</td> 
                                 @elseif($dsb->tinhtrangdon == 1) 
@@ -84,7 +84,7 @@
                                 <td>{{$dsb->users->sodienthoai}}</td>
                                 <td>{{$dsb->sokhachdangky}}</td>
                                 <td>{{number_format($dsb->tongtien)}}</td>
-                                <td>{{$dsb->timeBD}}</td> 
+                                <td>{{$dsb->thoigianbatdau}}</td> 
                                 <td><i class="glyphicon glyphicon-ok"></i><a href="{{route('chapnhan',$dsb->id)}}" onclick = "return chapnhan()"> Chap nhan</a></td>
                                 <td><i class="glyphicon glyphicon-remove"></i><a href="{{route('tuchoi',$dsb->id)}}" onclick = "return tuchoi()"> Tu choi</a></td> 
                             </tr>
@@ -127,7 +127,7 @@
                                 <td>{{$dsb->users->sodienthoai}}</td>
                                 <td>{{$dsb->sokhachdangky}}</td>
                                 <td>{{number_format($dsb->tongtien)}}</td>
-                                <td>{{$dsb->timeBD}}</td> 
+                                <td>{{$dsb->thoigianbatdau}}</td> 
                                 <td><i class="glyphicon glyphicon-ok"></i><a href="{{route('xacnhanditour',$dsb->id)}}" onclick = "return confirm('Ban chac chan khach hang nay da di tour?')"> Xac nhan</a></td>
                             </tr>
                             @endif

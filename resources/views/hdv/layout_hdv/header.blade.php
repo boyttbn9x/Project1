@@ -19,7 +19,7 @@
         </li>
     </ul>
     @endif
-    @if(Auth::user()->status != 2)
+    @if(Auth::user()->trangthaihdv != 2)
         <script type="text/javascript">
             setInterval(function(){
                 alert("Ban can lien he admin qua so dien thoai 0168xxxxxxx de duoc cap quyen tao tour")

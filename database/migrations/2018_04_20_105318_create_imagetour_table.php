@@ -17,7 +17,7 @@ class CreateImagetourTable extends Migration
             $table->increments('id');
             $table->integer('tour_id')->unsigned();
             $table->foreign('tour_id')->references('id')->on('tour')->onDelete('cascade');
-            $table->string('image',100);
+            $table->string('hinhanh',100);
             $table->timestamps();
         });
     }

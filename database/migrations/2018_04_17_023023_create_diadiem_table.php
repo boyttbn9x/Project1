@@ -15,7 +15,7 @@ class CreateDiadiemTable extends Migration
     {
         Schema::create('diadiem', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tendiadiem');
+            $table->string('tendiadiem', 100);
             $table->timestamps();
         });
     }

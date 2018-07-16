@@ -16,18 +16,22 @@
 
 						<p>Email: {{$user->email}}<p>
 						@if($user->namsinh != "")
-						<p>Nam sinh: {{$user->namsinh}}</p>
+							<p>Nam sinh: {{$user->namsinh}}</p>
 						@endif
 
-						@if($user->gioitinh != "")
-						<p>Gioi tinh: {{$user->gioitinh}}</p>
+						@if($user->gioitinh == 1)
+							<p>Gioi tinh: Nam</p>
+						@elseif($user->gioitinh === 0)
+							<p>Gioi tinh: Nu</p>
 						@endif
 
 						@if($user->anhdaidien != "")
 						<p>Anh dai dien:<br> <img src="upload/{{$user->anhdaidien}}" width="200" height="200"></p>
 						@endif
 
-						<p>Dia chi: {{$user->diachi}}</p>
+						@if($user->diachi != "")
+							<p>Dia chi: {{$user->diachi}}</p>
+						@endif
 						<p>So dien thoai: {{$user->sodienthoai}}</p>
 						<a class="btn btn-primary" href="" data-toggle="modal" data-target="#SuaThongTin">Sua thong tin <span class="glyphicon glyphicon-chevron-right"></span></a>
 					</div>
@@ -51,15 +55,20 @@
 								<p>Nam sinh: {{$ct->namsinh}}</p>
 								@endif
 
-								@if($ct->gioitinh != "")
-								<p>Gioi tinh: {{$ct->gioitinh}}</p>
+								@if($ct->gioitinh == 1)
+									<p>Gioi tinh: Nam</p>
+								@elseif($ct->gioitinh === 0)
+									<p>Gioi tinh: Nu</p>
 								@endif
 
 								@if($ct->anhdaidien != "")
-								<p>Anh dai dien:<br> <img src="upload/{{$ct->anhdaidien}}" width="200" height="200"></p>
+									<p>Anh dai dien:<br> <img src="upload/{{$ct->anhdaidien}}" width="200" height="200"></p>
 								@endif
 
-								<p>Dia chi: {{$ct->diachi}}</p>
+								@if($ct->diachi != "")
+									<p>Dia chi: {{$ct->diachi}}</p>
+								@endif
+
 								<p>So dien thoai: {{$ct->sodienthoai}}</p>
 								<a class="btn btn-primary" href="{{route('tour_hdv',$ct->id)}}">Xem cac tour da mo<span class="glyphicon glyphicon-chevron-right"></span></a>
 							</div>
@@ -71,5 +80,4 @@
 		</div>
 	</div>
 </div>
-
 @endsection

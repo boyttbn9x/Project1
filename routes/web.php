@@ -78,6 +78,7 @@ Route::group(['prefix'=>'admin','middleware'=>'CheckAdmin'],function(){
 	//quan ly binh luan
 	Route::get('dsbinhluan',['as'=>'dsbinhluan', 'uses'=>'AdminController@DSBinhluan']);
 	Route::get('xoabinhluan/{idbl}',['as'=>'xoabinhluan', 'uses'=>'AdminController@Xoabinhluan']);
+	Route::get('anbinhluan/{idbl}',['as'=>'anbinhluan', 'uses'=>'AdminController@Anbinhluan']);
 
 	Route::resource('diadiem','DiaDiemController', ['except'=>['show']]);
 

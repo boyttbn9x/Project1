@@ -25,7 +25,7 @@ class DatTourRequest extends FormRequest
     {
         $this->session()->flash('errorDatTour', true);
         return [
-            'timeBD'=>'required|date',
+            'thoigianbatdau'=>'required|date',
             'sokhachdangky'=>'required',
         ];
     }
@@ -33,8 +33,8 @@ class DatTourRequest extends FormRequest
     public function messages()
     {
         return [
-            'timeBD.required'=>'Vui long nhap thoi gian bat dau',
-            'timeBD.date'=>'Khong dung dinh dang date',
+            'thoigianbatdau.required'=>'Vui long nhap thoi gian bat dau',
+            'thoigianbatdau.date'=>'Khong dung dinh dang Nam-Thang-Ngay',
             'sokhachdangky.required'=>'Vui long nhap so khach dang ky',
         ];
     }

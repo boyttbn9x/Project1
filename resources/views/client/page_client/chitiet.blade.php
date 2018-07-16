@@ -13,6 +13,11 @@
 @endsection
 
 @section('content')
+@if(isset($cttour) && $cttour->trangthaitour == 0)
+	<div class="col-md-9 col-xs-9 col-sm-9" style="background-color: white">
+		<h1 align="center" style="color: orange">Tour da bi xoa</h1>
+	</div>
+@elseif(isset($cttour))
 <div class="col-md-9 col-xs-9 col-sm-9" style="background-color: white">
 	<h1 class="title text-center" style="color: orange; margin-top: 20px">{{$cttour->tentour}}</h1>
 	<div class="panel-body">	
@@ -20,7 +25,8 @@
 			<div class="col-md-11 col-xs-11">
 				<p>Huong dan vien: <a href="{{route('tthdv',$cttour->users_id)}}"> {{$cttour->users->hoten}}</a><p>
 				<p>Dia diem: {{$cttour->diadiem->tendiadiem}}<p>
-				<p>So khach toi da: {{$cttour->sokhachmax}}</p>
+				<p>So khach toi da: {{$cttour->sokhachtoida}} nguoi</p>
+				<p>So ngay di: {{$cttour->songaydi}} ngay</p>
 				<p>Gia tour: {{ number_format($cttour->giatour) }} VND</p>
 
 				@if($cttour->hinhanh != '')
@@ -33,20 +39,20 @@
 					<span style="display: block;">Cac hinh anh khac:</span>
 					@foreach($cttour->imagetour as $imt)
 					<a href="" data-toggle="modal" data-target="#imt{{$imt->id}}" style="float: left">
-						<img src="upload/{{$imt->image}}" height="100" width="100" style="margin: 5px; border: 1px solid red">
+						<img src="upload/{{$imt->hinhanh}}" height="100" width="100" style="margin: 5px; border: 1px solid red">
 					</a>
 
 					<div class="modal" id="imt{{$imt->id}}">
 					    <div class="modal-dialog modal-lg">
 					        <div class="modal-content">
 					            <div class="modal-body">
-					            	<img class= "img-responsive" src="upload/{{$imt->image}}" width="1000" />
+					            	<img class= "img-responsive" src="upload/{{$imt->hinhanh}}" width="1000" />
 					            </div>
 					        </div>
 					    </div>
 					</div>
 					@endforeach
-					<div style="clear: both"></div>
+					<div style="clear: both; margin-bottom: 10px"></div>
 				@endif
 
 				@if(Auth::check())
@@ -73,4 +79,5 @@
 		@include('client.page_client.nhanxet')
 	</div>	
 </div>
+@endif
 @endsection

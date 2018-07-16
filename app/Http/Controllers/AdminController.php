@@ -43,8 +43,13 @@ class AdminController extends Controller
 
     public function Xoabinhluan($idbl){
         Comment::find($idbl)->delete();
-        Comment::where('parent_id',$idbl)->delete();
         return redirect()->back()->with('thongbao','Xoa binh luan thanh cong');
+    }
+    public function Anbinhluan($idbl){
+        $comment = Comment::find($idbl);
+        $comment->trangthaibinhluan = 1;
+        $comment->save();
+        return redirect()->back()->with('thongbao1','Binh luan da duoc an');
     }
 
     public function ThongkeDonhang(){
