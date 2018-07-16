@@ -34,7 +34,13 @@
                             <td>{{$dsk->gioitinh}}</td>
                             <td>{{$dsk->sodienthoai}}</td>
                             <td>{{$dsk->diachi}}</td>                   
-                            <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{route('xoakhach1',$dsk->id)}}" onclick = "return xoa()"> Delete</a></td>
+                            <td class="center">
+                                <form action="{{route('xoa-user',$dsk->id)}}" method="post">
+                                    @method('delete')
+                                    {{csrf_field()}}
+                                    <button type="submit" onclick="return xoa();"><i class="fa fa-trash-o  fa-fw"></i></button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -75,7 +81,13 @@
                             <td>{{$dsh->email}}</td>
                             <td>{{$dsh->sodienthoai}}</td>
                             <td>{{$dsh->diachi}}</td>              
-                            <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{route('xoahdv1',$dsh->id)}}" onclick="return xoaHdv()"> Delete</a></td>
+                            <td class="center">
+                                <form action="{{route('xoa-user',$dsh->id)}}" method="post">
+                                    @method('delete')
+                                    {{csrf_field()}}
+                                    <button type="submit" onclick="return xoaHdv()"><i class="fa fa-trash-o  fa-fw"></i></button>
+                                </form>
+                            </td>
                             @if($dsh->status == "" || $dsh->status == 1)
                                 <td class="center"><a href="{{route('cnhdv1',$dsh->id)}}" onclick="return chapnhan()"> Chap nhan</a></td>
                             @else

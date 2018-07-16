@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DangKyRequest;   
 use App\Http\Requests\DangKyHDVRequest;
 use App\Http\Requests\DangNhapRequest;   
+use App\Http\Requests\SuaNguoiDungRequest;
+use App\Http\Requests\DatTourRequest;
 use App\User;
 use App\Tour;
 use App\Diadiem;
@@ -19,36 +21,27 @@ use Auth;
 class PageController extends Controller
 {
     public function getTrangchu(){
-        $tour=Tour::paginate(9);
+        $tour=Tour::paginate(12);
         return view('client.page_client.danhsachtour',compact('tour'));
     }
 
-    public function getDiadiem($iddd){
+    public function getTourDiadiem($iddd){
         $tourdiadiem= Diadiem::find($iddd);     
         return view('client.page_client.danhsachtour',compact('tourdiadiem'));
     }
 
-    public function postDattour($idtour, Request $request){
-        $request->session()->flash('errorDatTour','');
-        $this-> validate($request,
-            [
-                'timeBD'=>'required|date',
-                'sokhachdangky'=>'required',
-            ],
-            [
-                'timeBD.required'=>'Vui long nhap thoi gian bat dau',
-                'timeBD.date'=>'Khong dung dinh dang date',
-                'sokhachdangky.required'=>'Vui long nhap so khach dang ky',
-            ]);
+    public function postDattour(DatTourRequest $request){
+        $tour = Tour::find($request->idtour);
+        if($tour->sokhachmax < $request->sokhachdangky || $request->sokhachdangky < 0){
+            return redirect()->back()->with('loiKhachMax','So khach dang ky phai nho hon hoac bang so khach max.');
+        }
+
         $bill = new Bill();
         $bill->tour_id = $request->idtour;
         $bill->users_id = $request->idkhach;
         $bill->tongtien = $request->giatour;
         $bill->tinhtrangdon = 0;
-        $bill->timeBD = $request->timeBD;
-
-        $tour = Tour::find($idtour);
-        if($tour->sokhachmax < $request->sokhachdangky || $request->sokhachdangky < 0) return redirect()->back()->with('loiKhachMax','So khach dang ky phai nho hon hoac bang so khach max.');
+        $bill->timeBD = $request->timeBD;    
         $bill->sokhachdangky = $request->sokhachdangky;
         $bill->save();
         return redirect()->back()->with('successDatTour','Gui don dat tour thanh cong');
@@ -89,28 +82,19 @@ class PageController extends Controller
     public function postDangnhap(DangNhapRequest $req){
         $check_user = array('email'=>$req->email,'password'=>$req->password);
         $check_admin = array('email'=>$req->email,'password'=>$req->password,'quyen'=>3);
-        if(Auth::attempt($check_admin))
+        $remember = $req->ghinho;
+        if(Auth::attempt($check_admin, $remember)){
             return redirect()->route('trang-chu-admin');
-        else if(Auth::attempt($check_user))
+        }else if(Auth::attempt($check_user, $remember)){
             return redirect()->back();
-        else
+        }else{
             return redirect()->back()->with('loiLogin','Sai tài khoản hoặc mật khẩu!');
+        }
     }
 
     public function getDangxuat(){
         Auth::logout();
         return redirect()->route('trang-chu');
-    }
-
-    public function postBinhluan($idtour, Request $request){
-        if(empty($request->noidung)) return redirect()->back()->with('errorComment','loi binh luan');
-        $comment = new Comment();
-        $comment->noidung = $request->noidung;
-        $comment->users_id = Auth::user()->id;
-        $comment->parent_id = 0;
-        $comment->tour_id = $idtour;
-        $comment->save();
-        return redirect()->back()->with('successComment','Gui binh luan thanh cong');
     }
 
     public function getThongtincanhan(){
@@ -123,33 +107,10 @@ class PageController extends Controller
         return view('client.page_client.thongtincanhan', compact('cthdv'));
     }
 
-    public function postSuathongtin(Request $request){
-       $this -> validate($request,
-            [
-                'hoten'=>'required',
-                'sodienthoai'=>'required|numeric',
-            ],
-            [
-                'hoten.required'=>'Vui long nhap ho ten',
-                'sodienthoai.required'=>'Vui long nhap so dien thoai',
-                'sodienthoai.numeric'=>'So dien thoai la 1 day so',
-            ]);     
+    public function postSuathongtin(SuaNguoiDungRequest $request){
         $user = Auth::user();
-        $user->hoten = $request->hoten;
 
         if($request->checkpassword == "on"){
-            $this->validate($request,
-                [
-                    'password'=>'required|min:6|max:30',
-                    'passwordAgain' =>'required|same:password'
-                ],
-                [
-                    'password.required' => 'Bạn chưa nhập mật khẩu moi',
-                    'password.min' => 'Mật khẩu moi toi thieu 6 kí tự',
-                    'password.max' => 'Mật khẩu moi tối đa 30 kí tự',
-                    'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
-                    'passwordAgain.same' => 'Xac nhan mat khau moi khong đúng'
-                ]);
             $user->password = bcrypt($request->password);
         }
         if($request->hasFile('anhdaidien')){
@@ -168,8 +129,7 @@ class PageController extends Controller
             $file->move("upload",$anhdaidien);
             $user->anhdaidien = $anhdaidien;
         }
-        $user->sodienthoai=$request->sodienthoai;
-        $user->diachi = $request->diachi;
+        
         if ($request->namsinh != "") {
             $y = date('Y');
             if($y - $request->namsinh  <= 100 && $y - $request->namsinh  >= 3) {
@@ -178,9 +138,11 @@ class PageController extends Controller
                 return redirect()->back()->with('loinamsinh','Vui long nhap dung nam sinh');
             }
         }
-        if($request->gioitinh != ""){
-            $user->gioitinh = $request->gioitinh;
-        }
+
+        $user->hoten = $request->hoten;
+        $user->gioitinh = $request->gioitinh;
+        $user->sodienthoai=$request->sodienthoai;
+        $user->diachi = $request->diachi;
         $user->save();
         return redirect()->back()->with('suathanhcong','Sua thong tin thanh cong');
     }
@@ -198,18 +160,6 @@ class PageController extends Controller
     public function getLichsu(){
         $lichsu = Bill::where('users_id',Auth::user()->id)->paginate(6);
         return view('client.page_client.lichsudattour', compact('lichsu'));
-    }
-
-    public function postTraloi($idbl, Request $request){
-        if(empty($request->traloi)) return redirect()->back()->with('errorReply','loi tra loi.');
-   
-        $traloi = new Comment();
-        $traloi->parent_id = $idbl;
-        $traloi->users_id = Auth::user()->id;
-        $traloi->tour_id = Comment::find($idbl)->tour_id;
-        $traloi->noidung = $request->traloi;
-        $traloi->save();
-        return redirect()->back()->with('successReply','tra loi thanh cong.');
     }
 
     public function Danhgia($idtour, Request $request){

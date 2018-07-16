@@ -10,10 +10,10 @@
                 <a href=""><i class="fa fa-bar-chart-o fa-fw"></i> Quan ly nguoi dung<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{{route('dskhach1')}}">Danh sách Khach hang</a>
+                        <a href="{{route('list-user',1)}}">Danh sách Khach hang</a>
                     </li>
                     <li>
-                        <a href="{{route('dshdv1')}}">Danh sách Huong dan vien</a>
+                        <a href="{{route('list-user',2)}}">Danh sách Huong dan vien</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

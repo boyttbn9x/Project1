@@ -15,23 +15,17 @@ class AdminController extends Controller
     	return view('admin.layout_admin.index');
     }
 
-    public function getDSkhach(){
-    	$dskhach = User::where('quyen',1)->get();
-    	return view('admin.page_admin.danhsachnguoidung', compact('dskhach'));
+    public function getListUser($idquyen){
+        if($idquyen == 1){
+            $dskhach = User::where('quyen',1)->get();
+        }elseif($idquyen == 2){
+            $dshdv = User::where('quyen',2)->get();
+        }
+    	return view('admin.page_admin.danhsachnguoidung', compact('dskhach', 'dshdv'));
     }
 
-    public function getDShdv(){
-    	$dshdv = User::where('quyen',2)->get();
-    	return view('admin.page_admin.danhsachnguoidung', compact('dshdv'));
-    }
-
-    public function Xoakhach($idk){
-    	User::find($idk)->delete(); 	
-    	return redirect()->back()->with('thongbao','Xoa thanh cong');
-    }
-
-    public function Xoahdv($idhdv){
-    	User::find($idhdv)->delete();
+    public function deleteUser($iduser){
+    	User::find($iduser)->delete(); 	
     	return redirect()->back()->with('thongbao','Xoa thanh cong');
     }
 

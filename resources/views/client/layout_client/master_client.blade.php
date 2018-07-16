@@ -12,7 +12,12 @@
 
     <script src="dulich/js/jquery.js"></script>
     <script src="dulich/js/bootstrap.min.js"></script>
-    <script src="dulich/js/tour.js"></script>
+    <script src="dulich/js/Tour2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){       
+            
+        });
+    </script>
 </head>
 <body style="background-color: #ecf0f1">
 	@include('client.layout_client.header_client')
