@@ -30,16 +30,18 @@ class TourController extends Controller
 
     public function store(TaoTourRequest $request)
     {
-        if($request->sokhachmax <= 0) return redirect()->back()->with('loiSokhachmax','So khach max phai lon hon 0');
+        if($request->sokhachtoida <= 0) return redirect()->back()->with('loiSokhachmax','So khach max phai lon hon 0');
         if($request->giatour <= 0) return redirect()->back()->with('loiGiatour','Gia tour phai lon hon 0');
         
         $tour = new Tour();
-        $tour->users_id= Auth::user()->id;
-        $tour->tentour= $request->tentour;
-        $tour->diadiem_id= $request->diadiem;
-        $tour->sokhachmax=$request->sokhachmax;
-        $tour->giatour= $request->giatour;
-        $tour->mota= $request->mota;
+        $tour->users_id = Auth::user()->id;
+        $tour->tentour = $request->tentour;
+        $tour->diadiem_id = $request->diadiem;
+        $tour->songaydi = $request->songaydi;
+        $tour->sokhachtoida = $request->sokhachtoida;
+        $tour->giatour = $request->giatour;
+        $tour->mota = $request->mota;
+        $tour->trangthaitour = 1;
 
         if($request->hasFile('hinhanh')){
             $file = $request->file('hinhanh');
@@ -82,30 +84,37 @@ class TourController extends Controller
 
     public function update(TaoTourRequest $request, Tour $tour)
     {
-        $tour->tentour=$request->tentour;
-        $tour->giatour=$request->giatour;
-        $tour->mota=$request->mota;
-        $tour->sokhachmax=$request->sokhachmax;
-        $tour->diadiem_id=$request->diadiem;
-        if($request->hasFile('hinhanh')){
-            $file = $request->file('hinhanh');
-            $duoi = $file->getClientOriginalExtension();
-            if($duoi != 'jpg' && $duoi != "png" && $duoi != "jpeg"){
-                return redirect()->back()->with('loi','Định dạng ảnh phải là jpg,png,jpeg');
-            }
+        if (isset($request->tmp)) {
+            $tour->trangthaitour = 0;
+            $tour->save();
+            return redirect()->back()->with('thongbao','Xoa tour thanh cong');
+        }else{
+            $tour->tentour = $request->tentour;
+            $tour->giatour = $request->giatour;
+            $tour->mota = $request->mota;
+            $tour->sokhachtoida = $request->sokhachtoida;
+            $tour->songaydi = $request->songaydi;
+            $tour->diadiem_id = $request->diadiem;
+            if($request->hasFile('hinhanh')){
+                $file = $request->file('hinhanh');
+                $duoi = $file->getClientOriginalExtension();
+                if($duoi != 'jpg' && $duoi != "png" && $duoi != "jpeg"){
+                    return redirect()->back()->with('loi','Định dạng ảnh phải là jpg,png,jpeg');
+                }
 
-            $name = $file->getClientOriginalName();
-            $hinhanh= str_random(4)."_".$name;
-            while(file_exists("upload".$hinhanh)){
+                $name = $file->getClientOriginalName();
                 $hinhanh= str_random(4)."_".$name;
+                while(file_exists("upload".$hinhanh)){
+                    $hinhanh= str_random(4)."_".$name;
+                }
+                
+                $file->move("upload",$hinhanh);
+                $tour->hinhanh = $hinhanh;
             }
-            
-            $file->move("upload",$hinhanh);
-            $tour->hinhanh = $hinhanh;
-        }
 
-        $tour->save();
-        return redirect()->back()->with('thanhcong','Sua tour thanh cong');
+            $tour->save();
+            return redirect()->back()->with('thanhcong','Sua tour thanh cong');
+        }
     }
 
     public function destroy(Tour $tour)

@@ -27,7 +27,7 @@
 		<?php $flag =true ?>
 		@if(Auth::check())
 			@foreach($cttour->bill as $bll)
-				@if($bll->users_id == Auth::user()->id && $bll->tinhtrangdon == 4	 )
+				@if($bll->users_id == Auth::user()->id && $bll->tinhtrangdon == 4)
 					@foreach($cttour->rate as $rate)
 						@if($rate->users_id == Auth::user()->id)
 							<?php $flag = false ?>
@@ -63,98 +63,101 @@
 
 <div id="reviews" style="display: none">
 	<div class="col-sm-12">
-		@if($cttour->comment->count()>0)
-			<div class="dsbinhluan">
-				@foreach($cttour->comment as $cm)						
-					@if($cm->parent_id == 0)
-						<div style="margin-left: 50px">
-							<a><i class="fa fa-user"></i> {{$cm->users->email}}</a>
-							<a style="margin-left: 5px"><i class="fa fa-clock-o"></i> {{$cm->created_at}}</a>
+		<div class="dsbinhluan">
+		@foreach($cttour->comment as $cm)						
+			@if($cm->parent_id == 0)
+				<div style="margin-left: 50px">
+					<a><i class="fa fa-user"></i> {{$cm->users->email}}</a>
+					<a style="margin-left: 5px"><i class="fa fa-clock-o"></i> {{$cm->created_at}}</a>
 
-							@foreach($cttour->bill as $bll)
-								@if($bll->users_id == $cm->users_id && $bll->tinhtrangdon == 4)
-									<a style="color:#A9A9A9">( Da di tour nay )</a>
-									@break	
-								@endif
-							@endforeach
-							@if($cm->users_id == $cttour->users_id)
-								<a style="color:#00ffff">( Chu tour )</a>
-							@endif
-							<br>
-							<?php
-								$string ="";
-								$dem = 0;
-								for($i=0; $i < strlen($cm->noidung); $i++){
-									$dem++;
-									if ($dem % 65 == 0) {
-										$string .= "<br>";
-										$i--;
-									}else{
-										$string .= $cm->noidung[$i];
-									}
-									if($cm->noidung[$i] == " "){
-										$dem =0;
-									}
-								}
-								echo $string;
-							?>
-						</div>
+					@foreach($cttour->bill as $bll)
+						@if($bll->users_id == $cm->users_id && $bll->tinhtrangdon == 4)
+							<a style="color:#A9A9A9">( Da di tour nay )</a>
+							@break	
+						@endif
+					@endforeach
+					@if($cm->users_id == $cttour->users_id)
+						<a style="color:#00ffff">( Chu tour )</a>
 					@endif
 
-					<div id="dstraloi{{$cm->id}}">
-						<div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">
-						@foreach($cttour->comment as $tl)
-							@if($tl->parent_id == $cm->id)					
-								<a><i class="fa fa-user"></i>{{$tl->users->email}}</a>
-								<a style="margin-left: 5px"><i class="fa fa-clock-o"></i>{{$tl->created_at}}</a>
+					@if($cm->trangthaibinhluan == 1)
+						<span style="display:block; color: red"><<<< Binh luan da bi an. >>>></span>
+					@else
+						<?php
+							$string ="";
+							$dem = 0;
+							for($i=0; $i < strlen($cm->noidung); $i++){
+								$dem++;
+								if ($dem % 65 == 0) {
+									$string .= "<br>";
+									$i--;
+								}else{
+									$string .= $cm->noidung[$i];
+								}
+								if($cm->noidung[$i] == " "){
+									$dem =0;
+								}
+							}
+							echo '<span style="display:block">'.$string.'</span>';
+						?>
+					@endif
+				</div>
+			@endif
 
-								@foreach($cttour->bill as $bll)
-									@if($bll->users_id == $tl->users_id && $bll->tinhtrangdon == 4)
-										<a style="color:#A9A9A9">( Da di tour nay )</a>
-										@break	
-									@endif
-								@endforeach
+			<div id="dstraloi{{$cm->id}}">
+				<div class="col-md-11 col-xs-11 col-md-offset-1 col-xs-offset-1">
+				@foreach($cttour->comment as $tl)
+					@if($tl->parent_id == $cm->id)					
+						<a><i class="fa fa-user"></i>{{$tl->users->email}}</a>
+						<a style="margin-left: 5px"><i class="fa fa-clock-o"></i>{{$tl->created_at}}</a>
 
-								@if($tl->users_id == $cttour->users_id)
-									<a style="color:#00ffff">( Chu tour )</a>
-								@endif
-								<?php
-									$string ="";
-									$dem = 0;
-									for($i=0; $i < strlen($tl->noidung); $i++){
-										$dem++;
-										if ($dem % 65 == 0) {
-											$string .= "<br>";
-											$i--;
-										}else{
-											$string .= $tl->noidung[$i];
-										}
-										if($tl->noidung[$i] == " "){
-											$dem =0;
-										}
-									}
-									echo '<span style="display:block">'.$string.'</span>';
-								?>
+						@foreach($cttour->bill as $bll)
+							@if($bll->users_id == $tl->users_id && $bll->tinhtrangdon == 4)
+								<a style="color:#A9A9A9">( Da di tour nay )</a>
+								@break	
 							@endif
-						@endforeach 
+						@endforeach
+
+						@if($tl->users_id == $cttour->users_id)
+							<a style="color:#00ffff">( Chu tour )</a>
+						@endif
+						<?php
+							$string ="";
+							$dem = 0;
+							for($i=0; $i < strlen($tl->noidung); $i++){
+								$dem++;
+								if ($dem % 65 == 0) {
+									$string .= "<br>";
+									$i--;
+								}else{
+									$string .= $tl->noidung[$i];
+								}
+								if($tl->noidung[$i] == " "){
+									$dem =0;
+								}
+							}
+							echo '<span style="display:block">'.$string.'</span>';
+						?>
+					@endif
+				@endforeach 
+				</div>
+			</div>
+
+			@if(Auth::check() && $cm->parent_id ==0)
+				<div class="col-md-offset-1 col-xs-offset-1 row">
+					<a href="#tlbl{{$cm->id}}" class="tlbl" data-toggle ="tab" style="margin-left: 40px;">Tra loi</a>				
+					<div id="tlbl{{$cm->id}}" style="display: none;" class="traloi">     
+			            <div class="form-group">
+			                <textarea class="form-control formtraloi" id="traloi" name="traloi" rows="1" style="float:left; width: 80%"></textarea>
+			                <button class="btn btn-success guitraloi" id="guitraloi{{$cm->id}}" style="margin-left: 10px"><i class="fa fa-send-o"></i></button>
+			            </div>	            	
 					</div>
 				</div>
-
-				@if(Auth::check() && $cm->parent_id ==0)
-					<div class="col-md-offset-1 col-xs-offset-1 row">
-						<a href="#tlbl{{$cm->id}}" class="tlbl" data-toggle ="tab" style="margin-left: 40px;">Tra loi</a>				
-						<div id="tlbl{{$cm->id}}" style="display: none;" class="traloi">     
-				            <div class="form-group">
-				                <textarea class="form-control formtraloi" id="traloi" name="traloi" rows="1" style="float:left; width: 80%"></textarea>
-				                <button class="btn btn-success guitraloi" id="guitraloi{{$cm->id}}" style="margin-left: 10px"><i class="fa fa-send-o"></i></button>
-				            </div>	            	
-						</div>
-					</div>
-				@endif						
-			@endforeach
-			</div>
-		@else
-			<span style="color:#A9A9A9; display: block;">Hien chua co binh luan nao.</span>
+			@endif						
+		@endforeach
+		</div>
+		@if($cttour->comment->count() == 0)
+			<span style="color:#A9A9A9; display: block;" id="no-comment">Hien chua co binh luan nao.</span>
 		@endif
 		
 		@if(Auth::check())

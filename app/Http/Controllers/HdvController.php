@@ -52,23 +52,23 @@ class HdvController extends Controller
     }
 
     public function postThemAnh($idtour, Request $request){
-        if($request->hasFile('image')){
-            $file = $request->file('image');
+        if($request->hasFile('hinhanh')){
+            $file = $request->file('hinhanh');
             $duoi = $file->getClientOriginalExtension();
             if($duoi != 'jpg' && $duoi != "png" && $duoi != "jpeg"){
                 return redirect()->back()->with('loi','Định dạng ảnh phải là jpg,png,jpeg');
             }
 
             $name = $file->getClientOriginalName();
-            $image= str_random(4)."_".$name;
-            while(file_exists("upload".$image)){
-                $image= str_random(4)."_".$name;
+            $hinhanh= str_random(4)."_".$name;
+            while(file_exists("upload".$hinhanh)){
+                $hinhanh= str_random(4)."_".$hinhanh;
             }
             
-            $file->move("upload",$image);
+            $file->move("upload",$hinhanh);
 
             $imagetour = new ImageTour();
-            $imagetour->image = $image;
+            $imagetour->hinhanh = $hinhanh;
             $imagetour->tour_id = $idtour;
             $imagetour->save();
             return redirect()->back()->with('success','Them hinh anh thanh cong.');

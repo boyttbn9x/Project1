@@ -31,7 +31,13 @@
                         <tr class="odd gradeX" align="center">
                             <td>{{$dsk->hoten}}</td>
                             <td>{{$dsk->email}}</td>
-                            <td>{{$dsk->gioitinh}}</td>
+                            @if($dsk->gioitinh == 1)
+                                <td>Nam</td>
+                            @elseif($dsk->gioitinh === 0)
+                                <td>Nu</td>
+                            @else
+                                <td>NULL</td>
+                            @endif
                             <td>{{$dsk->sodienthoai}}</td>
                             <td>{{$dsk->diachi}}</td>                   
                             <td class="center">
@@ -88,7 +94,7 @@
                                     <button type="submit" onclick="return xoaHdv()"><i class="fa fa-trash-o  fa-fw"></i></button>
                                 </form>
                             </td>
-                            @if($dsh->status == "" || $dsh->status == 1)
+                            @if($dsh->trangthaihdv == "" || $dsh->trangthaihdv == 1)
                                 <td class="center"><a href="{{route('cnhdv1',$dsh->id)}}" onclick="return chapnhan()"> Chap nhan</a></td>
                             @else
                                 <td class="center">Da co quyen</td>

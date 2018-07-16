@@ -1,6 +1,6 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
-        @if(Auth::user()->status == 2)
+        @if(Auth::user()->trangthaihdv == 2)
         <ul class="nav" id="side-menu">
             <li class="sidebar-search">
                 <div class="input-group custom-search-form"></div>

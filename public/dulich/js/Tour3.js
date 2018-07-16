@@ -60,9 +60,10 @@ $(document).ready(function(){
                         stringds = '<li style="padding: 5px"><a href = "chi-tiet/'+ ketqua.ketqua[i][0] +'">' + ketqua.ketqua[i][1] +'</a><br><span>'+ ketqua.ketqua[i][2]+' vnd</span></li>';
                         $('#dsketqua').append(stringds);
                     }
-                    
                 }
             });
+        }else{
+            $('#divtimkiem').hide();
         }
     });
  
@@ -141,7 +142,7 @@ $(document).ready(function(){
                 if (data.messages == "Vui long nhap noi dung tra loi") {
                     alert(data.messages);
                 }else{
-                    $('#dstraloi'+idbl).append(data.messages);                     
+                    $('#dstraloi'+idbl+' div').append(data.messages);                     
                 }
         },'json');
         $('#tlbl'+idbl+' #traloi').val('').attr('rows',1);
@@ -211,6 +212,7 @@ $(document).ready(function(){
                     $('.dsbinhluan').append(data.messages);                  
                 }
         },'json');
+        $('#no-comment').hide();
         $('.formbinhluan').val('').attr('rows',2);
     });
 

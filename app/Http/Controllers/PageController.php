@@ -32,7 +32,7 @@ class PageController extends Controller
 
     public function postDattour(DatTourRequest $request){
         $tour = Tour::find($request->idtour);
-        if($tour->sokhachmax < $request->sokhachdangky || $request->sokhachdangky < 0){
+        if($tour->sokhachtoida < $request->sokhachdangky || $request->sokhachdangky < 0){
             return redirect()->back()->with('loiKhachMax','So khach dang ky phai nho hon hoac bang so khach max.');
         }
 
@@ -41,7 +41,7 @@ class PageController extends Controller
         $bill->users_id = $request->idkhach;
         $bill->tongtien = $request->giatour;
         $bill->tinhtrangdon = 0;
-        $bill->timeBD = $request->timeBD;    
+        $bill->thoigianbatdau = $request->thoigianbatdau;
         $bill->sokhachdangky = $request->sokhachdangky;
         $bill->save();
         return redirect()->back()->with('successDatTour','Gui don dat tour thanh cong');
@@ -62,7 +62,7 @@ class PageController extends Controller
         $users->email = $req->email;
         $users->password= Hash::make($req->password);
         $users->sodienthoai = $req->sodienthoai;
-        $users->quyen = 1; 
+        $users->quyen = 1;
         $users->save();
         return redirect()->back()->with('thanhcongkhach','Dang ky thành công');
     }

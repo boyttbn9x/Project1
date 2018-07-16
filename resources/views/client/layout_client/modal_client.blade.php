@@ -164,8 +164,8 @@
     					  	<br>
 
     		    			<label>Thoi gian bat dau</label>
-    		    			<span style="color: red">{{$errors->first('timeBD')}}</span>
-    					  	<input type="text" class="form-control" placeholder="Nhap theo dang YYYY-MM-dd" name="timeBD" value="{{old('timeBD')}}">
+    		    			<span style="color: red">{{$errors->first('thoigianbatdau')}}</span>
+    					  	<input type="text" class="form-control" placeholder="Nhap theo dang YYYY-MM-dd" name="thoigianbatdau" value="{{old('thoigianbatdau')}}">
     						<br>
     			    			
     		    			<label>So luong nguoi dang ky</label>
@@ -250,15 +250,15 @@
 	                <br>
 
 	                <label>Gioi tinh:</label>                                
-	                @if($user->gioitinh == 'Nam')
-					<input type="radio" name="gioitinh" value="Nam" style="margin-left: 80px" checked=""> Nam
-					<input type="radio" name="gioitinh" value="Nu" style="margin-left: 80px"> Nu
-					@elseif($user->gioitinh == 'Nu')
-					<input type="radio" name="gioitinh" value="Nam" style="margin-left: 80px"> Nam
-					<input type="radio" name="gioitinh" value="Nu" style="margin-left: 80px" checked=""> Nu
+	                @if($user->gioitinh == 1)
+					<input type="radio" name="gioitinh" value="1" style="margin-left: 80px" checked=""> Nam
+					<input type="radio" name="gioitinh" value="0" style="margin-left: 80px"> Nu
+					@elseif($user->gioitinh == '0')
+					<input type="radio" name="gioitinh" value="1" style="margin-left: 80px"> Nam
+					<input type="radio" name="gioitinh" value="0" style="margin-left: 80px" checked=""> Nu
 					@else
-					<input type="radio" name="gioitinh" value="Nam" style="margin-left: 80px"> Nam
-					<input type="radio" name="gioitinh" value="Nu" style="margin-left: 80px"> Nu
+					<input type="radio" name="gioitinh" value="1" style="margin-left: 80px"> Nam
+					<input type="radio" name="gioitinh" value="0" style="margin-left: 80px"> Nu
 					@endif
 	                <br>
 

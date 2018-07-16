@@ -32,7 +32,7 @@
                     <br>
                     
                     <label>Hinh anh khac</label>
-                    <input type="file" class="form-control" name="image">
+                    <input type="file" class="form-control" name="hinhanh">
                     <br>
 
                     @if($tour->imagetour->count() >= 5)

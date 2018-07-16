@@ -19,7 +19,7 @@ class CreateRateTable extends Migration
             $table->foreign('tour_id')->references('id')->on('tour')->onDelete('cascade');
             $table->integer('users_id')->unsigned();
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('sodiem');
+            $table->tinyInteger('sodiem');
             $table->timestamps();
         });
     }

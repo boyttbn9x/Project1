@@ -46,8 +46,13 @@
                     <br>
 
                     <label>So khach max</label>
-                    <span style="color: red; margin-left: 20px">{{$errors->first('sokhachmax')}}</span>
-                    <input type="text" class="form-control" name="sokhachmax" value="{{old('sokhachmax')}}">
+                    <span style="color: red; margin-left: 20px">{{$errors->first('sokhachtoida')}}</span>
+                    <input type="text" class="form-control" name="sokhachtoida" value="{{old('sokhachtoida')}}">
+                    <br>
+
+                    <label>So ngay di</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('songaydi')}}</span>
+                    <input type="text" class="form-control" name="songaydi" value="{{old('songaydi')}}">
                     <br>
 
                     <label>Gia tour</label>
@@ -91,9 +96,14 @@
                     </select>
                     <br>
 
-                    <label>So khach max</label>
-                    <span style="color: red; margin-left: 20px">{{$errors->first('sokhachmax')}}</span>
-                    <input type="text" class="form-control" name="sokhachmax" value="{{$idt->sokhachmax}}">
+                    <label>So khach toi da</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('sokhachtoida')}}</span>
+                    <input type="text" class="form-control" name="sokhachtoida" value="{{$idt->sokhachtoida}}">
+                    <br>
+
+                    <label>So ngay di</label>
+                    <span style="color: red; margin-left: 20px">{{$errors->first('songaydi')}}</span>
+                    <input type="text" class="form-control" name="songaydi" value="{{$idt->songaydi}}">
                     <br>
 
                     <label>Gia tour</label>
